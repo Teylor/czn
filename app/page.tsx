@@ -1,4 +1,5 @@
-import { headers } from 'next/headers'
+"use client";
+
 import Link from 'next/link'
 
 export default function Home() {
@@ -9,27 +10,47 @@ export default function Home() {
       </header>
       <section className="my-8 container">
         <div className="my-8 grid grid-cols-1 gap-1 md:grid-cols-3">
-          <Link href="/combatants" className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors bg-black rounded-md hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black">
+          <Link key="combatants-link" href="/combatants" className="btn-primary">
             Combatants
           </Link>
-          <Link href="/partners" className="md:col-start-3 inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors bg-black rounded-md hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black">
+          <Link key="partners-link" href="/partners" className="md:col-start-3 btn-primary">
             Partners
           </Link>
         </div>
         <div className="my-8 grid grid-cols-1 gap-1 md:grid-cols-3">
-          <Link href="/teams" className="md:col-start-2 inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors bg-black rounded-md hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black">
+          <Link key="teams-link" href="/teams" className="md:col-start-2 btn-primary">
             Teams
           </Link>
         </div>
         <div className="my-8 grid grid-cols-1 gap-1 md:grid-cols-3">
-          <Link href="/builds" className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors bg-black rounded-md hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black">
-            Builds
+          <Link key="builds-link" href="/builds" className="btn-primary">
+            Builds (WIP)
           </Link>
-          <Link href="/fragments" className="md:col-start-3 inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors bg-black rounded-md hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black">
+          <Link key="fragments-link" href="/fragments" className="md:col-start-3 btn-primary">
             Memory Fragments
           </Link>
         </div>
+        <div className="my-8 grid grid-cols-1 gap-1 md:grid-cols-3">
+          <Link key="save-data-calculator-link" href="/builds" className="md:col-start-2 btn-primary">
+            Save Data Calculator (WIP)
+          </Link>
+          <Link key="fragments-scanner-link" href="/builds" className="md:col-start-2 btn-primary">
+            Fragment Scanner (WIP)
+          </Link>
+        </div>
       </section>
+       {/* TODO styles: push to bottom */}
+      <footer className="my-8 container text-center ">
+        <button
+        key="clear-data-button"
+          className="btn-primary"
+          onClick={async () => {
+            localStorage.clear();
+          }}
+        >
+          Clear Data
+        </button>
+      </footer>
     </>
   );
 }

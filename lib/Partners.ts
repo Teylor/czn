@@ -1,3 +1,15 @@
+export interface Partner {
+  id: string;
+  name: string;
+  type: string; // TODO type: "striker" | "hunter" | "controller" | "ranger" | "psionic" | "vanguard";
+  rarity?: number; // rarity?: 3 | 4 | 5;
+  passive?: string;
+  skill?: string;
+  ego?: number; // ego?: 0 | 1 | 2 | 3 | 4;
+  level?: number;
+  img?: string;
+}
+
 export const PARTNERS = [
   { 
     id: "yuri", 
@@ -27,9 +39,4 @@ If the combatant ends the turn without using an attack card, Heal 30% at the sta
 At the start of the battle, Damage dealt by the assigned combatant increases by 8% for 1 turn.`,
     skill: `120% Damage to all enemies.` 
   },
-];
-
-export const COMBATANTS = [ // TODO
-  { id: 1, name: "Combatant A", rarity: "SSR" },
-  { id: 2, name: "Combatant B", rarity: "SR" },
 ];
