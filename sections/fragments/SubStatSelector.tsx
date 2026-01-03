@@ -20,7 +20,7 @@ export default function SubStatSelector(
     setSelectedSubStat: (subStat: SubStat) => void,
     subStat: number,
     setSubStat: (subStatValue: number) => void,
-    selectedFragment: BaseMemoryFragment | null
+    selectedFragment: BaseMemoryFragment | undefined
   }): JSX.Element {
 
   return (

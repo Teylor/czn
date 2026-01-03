@@ -4,7 +4,7 @@ import Link from "next/link";
 import { JSX, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { 
-    BaseMemoryFragment, IMemoryFragment, IIMemoryFragment, SubStat, SetType, Rarity, Piece, Stat, IIIMemoryFragment, IVMemoryFragment, VMemoryFragment, VIMemoryFragment 
+    BaseMemoryFragment, IMemoryFragment, IIMemoryFragment, SubStat, SetType, Rarity, Piece, Stat, IIIMemoryFragment, IVMemoryFragment, VMemoryFragment, VIMemoryFragment
 } from "@/sections/domain/memoryFragment/MemoryFragment";
 import SubStatSelector from "@/sections/fragments/SubStatSelector";
 import SetSelector from "@/sections/fragments/SetSelector";
@@ -13,12 +13,66 @@ import MainStatSelector from "@/sections/fragments/MainStatSelector";
 
 export default function AddFragment(
     {
-
+        params
     }:
     {
-
+        params: Promise<{ id: string }>
     }): JSX.Element {
     const router = useRouter();
+
+    const [id, setId] = useState<{ id: string } | undefined>();
+    const [fragments, setFragments] = useState<BaseMemoryFragment[]>([]);
+    const [selectedFragment, setSelectedFragment] = useState<BaseMemoryFragment | undefined>(undefined);
+
+    useEffect(() => {
+        params.then(p => { 
+            setId(p);
+            const Fragments: BaseMemoryFragment[] = JSON.parse(localStorage.getItem("fragments") || "[]");
+            setFragments(Fragments);
+            let fragment: BaseMemoryFragment | undefined = Fragments.find(f => f.id == p.id);
+            setSelectedFragment(fragment)
+            setSelectedSet(fragment?.setType || null)
+            setSelectedPieceType(fragment?.piece || null)
+            if (fragment?.mainStat) {
+                const entries = Object.entries(fragment.mainStat);
+                if (entries.length > 0) {
+                    const [key, value] = entries[0] as [Stat, number];
+                    setSelectedMainStat(key);
+                    setMainStat(value);
+                }
+            }
+            if (fragment?.subStats) {
+                fragment.subStats.forEach((subStat, i) => {
+                    if (subStat) {
+                        const entries = Object.entries(subStat);
+                        if (entries.length > 0) {
+                            const [key, value] = entries[0] as [SubStat, number];
+                            setSubStatByIndex(i, key, value)
+                        }
+                    }
+                });
+            }
+        });
+    }, [id]);
+
+    function setSubStatByIndex(index: number, key: Partial<SubStat>, value: number) {
+        switch(index) {
+            case 0: setSelectedSubStat1(key); setSubStat1(value); break;
+            case 1: setSelectedSubStat2(key); setSubStat2(value); break;
+            case 2: setSelectedSubStat3(key); setSubStat3(value); break;
+            case 3: setSelectedSubStat4(key); setSubStat4(value); break;
+        }
+    }
+
+    /*
+    useEffect(() => {
+        const unwrap = async () => {
+            const p = await params;
+            setParams2(p);
+        };
+        unwrap();
+    }, [params]); 
+     */
 
     const [isSetOpen, setIsSetOpen] = useState(false);
     const [selectedSet, setSelectedSet] = useState<SetType | null>(null);
@@ -27,7 +81,6 @@ export default function AddFragment(
     const [selectedPieceType, setSelectedPieceType] = useState<Piece | null>(null);
 
     const [isSavable, setIsSavable] = useState(true); // TODO set false and activate when ok
-    const [selectedFragment, setSelectedFragment] = useState<BaseMemoryFragment | undefined>(undefined);
     
     const [selectedMainStat, setSelectedMainStat] = useState<Stat | null>(null);
     const [mainStat, setMainStat] = useState<number>(0);
