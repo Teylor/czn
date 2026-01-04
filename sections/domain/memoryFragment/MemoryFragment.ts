@@ -96,3 +96,33 @@ export abstract class MemoryFragment implements IMemoryFragment {
     abstract getPossibleStats(): Stat[];
     abstract getPossibleSubStats(): SubStat[];
 }
+
+export class CraftedMemoryFragment implements IMemoryFragment {
+    readonly id: string;
+    readonly img: string;
+    readonly setType: SetType;
+    readonly piece: Piece;
+    readonly roman: string;
+    readonly rarity: Rarity;
+    readonly level: number;
+    readonly mainStat: PairStat;
+    readonly subStats: [PairSubStat?, PairSubStat?, PairSubStat?, PairSubStat?];
+    readonly description?: string;
+    private equipped: boolean
+    private inTeams: number[]
+
+    constructor(memoryFragment: IMemoryFragment) {
+        this.id = memoryFragment.id; /* TODO change by main stat and subs instead of date */
+        this.setType = memoryFragment.setType;
+        this.piece = memoryFragment.piece;
+        this.roman = Piece[memoryFragment.piece];
+        this.rarity = memoryFragment.rarity;
+        this.level = memoryFragment.level;
+        this.mainStat = memoryFragment.mainStat;
+        this.subStats = memoryFragment.subStats;
+        this.img = memoryFragment.img;
+        this.description = memoryFragment.description;
+        this.equipped = false;
+        this.inTeams = []
+    }   
+}
