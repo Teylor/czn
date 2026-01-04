@@ -1,25 +1,27 @@
 import { JSX } from "react";
-import { Piece, Stat } from "../domain/memoryFragment/MemoryFragment";
-import { FIVE_POSSIBLE_STATS, FOUR_POSSIBLE_STATS, SIX_POSSIBLE_STATS } from "@/lib/MemoryFragments"; /* TODO remove, change for custom + change posible to stat */
+import { MemoryFragment, Piece, Stat } from "../domain/memoryFragment/MemoryFragment";
+//import { FIVE_POSSIBLE_STATS, FOUR_POSSIBLE_STATS, SIX_POSSIBLE_STATS } from "@/lib/MemoryFragments"; /* TODO remove, change for custom + change posible to stat */
 
 export default function MainStatSelector(
     {
-isMainStatOpen,
-setIsMainStatOpen,
-selectedPieceType,
-selectedMainStat,
-setSelectedMainStat,
-mainStat,
-setMainStat
+        isMainStatOpen,
+        setIsMainStatOpen,
+        selectedPieceType,
+        selectedMainStat,
+        setSelectedMainStat,
+        mainStat,
+        setMainStat,
+        selectedFragment
     }:
     {
-isMainStatOpen: boolean,
-setIsMainStatOpen: (isMainStatOpen: boolean) => void,
-selectedPieceType: Piece,
-selectedMainStat: Stat | null,
-setSelectedMainStat: (selectedMainStat: Stat) => void,
-mainStat: number,
-setMainStat: (mainStat: number) => void
+        isMainStatOpen: boolean,
+        setIsMainStatOpen: (isMainStatOpen: boolean) => void,
+        selectedPieceType: Piece,
+        selectedMainStat: Stat | undefined,
+        setSelectedMainStat: (selectedMainStat: Stat) => void,
+        mainStat: number,
+        setMainStat: (mainStat: number) => void,
+        selectedFragment: MemoryFragment | undefined
     }
 ): JSX.Element {
     return (
@@ -27,7 +29,7 @@ setMainStat: (mainStat: number) => void
         {
             isMainStatOpen ? (
                 <div className="w-100 top-full left-0 right-0 mt-1 border border-zinc-300 rounded-md bg-white z-10 max-h-64 overflow-y-auto">
-                    {selectedPieceType === Piece.IV && FOUR_POSSIBLE_STATS.map((iv_stat: Stat) => ( /* TODO */
+                    {selectedFragment?.getPossibleStats().map((iv_stat: Stat) => ( /* TODO */
                         <button
                             key={`IV-${iv_stat}`}
                             onClick={() => {
@@ -37,30 +39,6 @@ setMainStat: (mainStat: number) => void
                             className="w-100 px-3 py-2 text-left flex items-center gap-2 hover:bg-zinc-100 border-b border-zinc-200 last:border-b-0"
                         >
                             {iv_stat}
-                        </button>
-                    ))}
-                    {selectedPieceType === Piece.V && FIVE_POSSIBLE_STATS.map((v_stat: Stat) => ( /* TODO */
-                        <button
-                            key={`V-${v_stat}`}
-                            onClick={() => {
-                                setSelectedMainStat(v_stat);
-                                setIsMainStatOpen(false);
-                            }}
-                            className="w-100 px-3 py-2 text-left flex items-center gap-2 hover:bg-zinc-100 border-b border-zinc-200 last:border-b-0"
-                        >
-                            {v_stat}
-                        </button>
-                    ))}
-                    {selectedPieceType === Piece.VI && SIX_POSSIBLE_STATS.map((vi_stat: Stat) => ( /* TODO pass to main class + remove main stat from substats */
-                        <button
-                            key={`VI-${vi_stat}`}
-                            onClick={() => {
-                                setSelectedMainStat(vi_stat);
-                                setIsMainStatOpen(false);
-                            }}
-                            className="w-100 px-3 py-2 text-left flex items-center gap-2 hover:bg-zinc-100 border-b border-zinc-200 last:border-b-0"
-                        >
-                            {vi_stat}
                         </button>
                     ))}
                 </div>

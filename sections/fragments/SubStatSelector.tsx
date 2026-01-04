@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import { BaseMemoryFragment, SubStat } from "../domain/memoryFragment/MemoryFragment";
+import { MemoryFragment, SubStat } from "../domain/memoryFragment/MemoryFragment";
 
 export default function SubStatSelector(
   {
@@ -16,11 +16,11 @@ export default function SubStatSelector(
     substatNumber: string,
     isSubStatOpen: boolean,
     setIsSubStatOpen: (isSubStatOpen: boolean) => void,
-    selectedSubStat: Partial<SubStat> | null,
+    selectedSubStat: Partial<SubStat> | undefined,
     setSelectedSubStat: (subStat: SubStat) => void,
     subStat: number,
     setSubStat: (subStatValue: number) => void,
-    selectedFragment: BaseMemoryFragment | undefined
+    selectedFragment: MemoryFragment | undefined
   }): JSX.Element {
 
   return (

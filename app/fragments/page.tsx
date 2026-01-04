@@ -1,6 +1,6 @@
 "use client";
 
-import { BaseMemoryFragment } from "@/sections/domain/memoryFragment/MemoryFragment";
+import { MemoryFragment } from "@/sections/domain/memoryFragment/MemoryFragment";
 import Link from "next/link";
 import Image from "next/image"
 import { JSX, useEffect, useState } from "react";
@@ -13,7 +13,7 @@ export default function MemoryFragments(
 
   }): JSX.Element {
 
-  const [fragments, setFragments] = useState<BaseMemoryFragment[]>([]);
+  const [fragments, setFragments] = useState<MemoryFragment[]>([]);
 
   useEffect(() => {
     const Fragments = JSON.parse(localStorage.getItem("fragments") || "[]");
@@ -30,17 +30,16 @@ export default function MemoryFragments(
         <>
           <h1>Memory Fragments</h1>
           <section className="my-8 container">
-            
             <div className="grid grid-cols-1 gap-1 sm:grid-cols-3 md:grid-cols-5">
               {
-                fragments.map((fragment: BaseMemoryFragment) => (
+                fragments.map((fragment: MemoryFragment) => (
                   <div key={fragment?.id} className="relative border border-zinc-300 rounded-md p-4">
                     <button
                       aria-label="Delete fragment"
                       onClick={() => handleDelete(fragment.id as unknown as string)}
                       className="absolute top-1 right-1 w-6 h-6 flex items-center justify-center text-xs font-bold text-white bg-red-600 rounded-full hover:bg-red-700"
                     >
-                      ×
+                      X
                     </button>
                     <Link
                     href={`/fragments/add/${fragment?.id}`}
@@ -60,7 +59,7 @@ export default function MemoryFragments(
               }
             </div>
             
-            <Link href="/fragments/add" className="btn-primary">
+            <Link href="/fragments/add" className="btn-primary m-10">
               <IoMdAdd className="mr-2" />
               Add Memory Fragments
             </Link>

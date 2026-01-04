@@ -4,12 +4,18 @@ import Link from "next/link";
 import { JSX, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { 
-    BaseMemoryFragment, IMemoryFragment, IIMemoryFragment, SubStat, SetType, Rarity, Piece, Stat, IIIMemoryFragment, IVMemoryFragment, VMemoryFragment, VIMemoryFragment
+    MemoryFragment, SubStat, SetType, Rarity, Piece, Stat
 } from "@/sections/domain/memoryFragment/MemoryFragment";
 import SubStatSelector from "@/sections/fragments/SubStatSelector";
 import SetSelector from "@/sections/fragments/SetSelector";
 import PieceSelector from "@/sections/fragments/PieceSelector";
 import MainStatSelector from "@/sections/fragments/MainStatSelector";
+import { MemoryFragmentI } from "@/sections/domain/memoryFragment/MemoryFragmentI";
+import { MemoryFragmentII } from "@/sections/domain/memoryFragment/MemoryFragmentII";
+import { MemoryFragmentIII } from "@/sections/domain/memoryFragment/MemoryFragmentIII";
+import { MemoryFragmentIV } from "@/sections/domain/memoryFragment/MemoryFragmentIV";
+import { MemoryFragmentV } from "@/sections/domain/memoryFragment/MemoryFragmentV";
+import { MemoryFragmentVI } from "@/sections/domain/memoryFragment/MemoryFragmentVI";
 
 export default function AddFragment(
     {
@@ -21,18 +27,18 @@ export default function AddFragment(
     const router = useRouter();
 
     const [id, setId] = useState<{ id: string } | undefined>();
-    const [fragments, setFragments] = useState<BaseMemoryFragment[]>([]);
-    const [selectedFragment, setSelectedFragment] = useState<BaseMemoryFragment | undefined>(undefined);
+    const [fragments, setFragments] = useState<MemoryFragment[]>([]);
+    const [selectedFragment, setSelectedFragment] = useState<MemoryFragment | undefined>(undefined);
 
     useEffect(() => {
         params.then(p => { 
             setId(p);
-            const Fragments: BaseMemoryFragment[] = JSON.parse(localStorage.getItem("fragments") || "[]");
+            const Fragments: MemoryFragment[] = JSON.parse(localStorage.getItem("fragments") || "[]");
             setFragments(Fragments);
-            let fragment: BaseMemoryFragment | undefined = Fragments.find(f => f.id == p.id);
+            let fragment: MemoryFragment | undefined = Fragments.find(f => f.id == p.id);
             setSelectedFragment(fragment)
-            setSelectedSet(fragment?.setType || null)
-            setSelectedPieceType(fragment?.piece || null)
+            setSelectedSet(fragment?.setType || undefined)
+            setSelectedPieceType(fragment?.piece || undefined)
             if (fragment?.mainStat) {
                 const entries = Object.entries(fragment.mainStat);
                 if (entries.length > 0) {
@@ -75,133 +81,92 @@ export default function AddFragment(
      */
 
     const [isSetOpen, setIsSetOpen] = useState(false);
-    const [selectedSet, setSelectedSet] = useState<SetType | null>(null);
+    const [selectedSet, setSelectedSet] = useState<SetType | undefined>(undefined);
 
     const [isPieceTypeOpen, setIsPieceTypeOpen] = useState(false);
-    const [selectedPieceType, setSelectedPieceType] = useState<Piece | null>(null);
+    const [selectedPieceType, setSelectedPieceType] = useState<Piece | undefined>(undefined);
 
     const [isSavable, setIsSavable] = useState(true); // TODO set false and activate when ok
     
-    const [selectedMainStat, setSelectedMainStat] = useState<Stat | null>(null);
+    const [selectedMainStat, setSelectedMainStat] = useState<Stat | undefined>(undefined);
     const [mainStat, setMainStat] = useState<number>(0);
 
     useEffect(() => {
         switch (selectedPieceType) {
             case Piece.I:
                 setSelectedMainStat(Stat.ATTACK);
-                setSelectedFragment(selectedSet ? new IMemoryFragment(selectedSet, Rarity.LEGENDARY) : undefined);
+                setSelectedFragment(selectedSet ? new MemoryFragmentI(selectedSet, Piece.I, Rarity.LEGENDARY) : undefined);
                 break;
             case Piece.II:
                 setSelectedMainStat(Stat.DEFENSE);
-                setSelectedFragment(selectedSet ? new IIMemoryFragment(selectedSet, Rarity.LEGENDARY) : undefined);
+                setSelectedFragment(selectedSet ? new MemoryFragmentII(selectedSet, Piece.II, Rarity.LEGENDARY) : undefined);
                 break;
             case Piece.III:
                 setSelectedMainStat(Stat.HP);
-                setSelectedFragment(selectedSet ? new IIIMemoryFragment(selectedSet, Rarity.LEGENDARY) : undefined);
+                setSelectedFragment(selectedSet ? new MemoryFragmentIII(selectedSet, Piece.III, Rarity.LEGENDARY) : undefined);
                 break;
             case Piece.IV:
                 setIsMainStatOpen(true);
-                setSelectedFragment(selectedSet ? new IVMemoryFragment(selectedSet, Rarity.LEGENDARY) : undefined);
+                setSelectedFragment(selectedSet ? new MemoryFragmentIV(selectedSet, Piece.IV, Rarity.LEGENDARY) : undefined);
                 break;
             case Piece.V:
                 setIsMainStatOpen(true);
-                setSelectedFragment(selectedSet ? new VMemoryFragment(selectedSet, Rarity.LEGENDARY) : undefined);
+                setSelectedFragment(selectedSet ? new MemoryFragmentV(selectedSet, Piece.V, Rarity.LEGENDARY) : undefined);
                 break;
             case Piece.VI:
                 setIsMainStatOpen(true);
-                setSelectedFragment(selectedSet ? new VIMemoryFragment(selectedSet, Rarity.LEGENDARY) : undefined);
+                setSelectedFragment(selectedSet ? new MemoryFragmentVI(selectedSet, Piece.VI, Rarity.LEGENDARY) : undefined);
                 break;
             default:
-                setSelectedMainStat(null);
+                setSelectedMainStat(undefined);
                 break;
         }
     }, [selectedPieceType]);
 
     const [isMainStatOpen, setIsMainStatOpen] = useState(false);
 
-    useEffect(() => { // TODO revisar
+    useEffect(() => {
         if (!selectedFragment || selectedMainStat == null) return;
-
-        if (typeof selectedFragment.setMainStat === "function") {
-            selectedFragment.setMainStat(selectedMainStat, mainStat);
-        } else {
-            selectedFragment.mainStat = { [selectedMainStat]: mainStat } as Partial<Record<Stat, number>>;
-        }
+        selectedFragment.mainStat = { [selectedMainStat]: mainStat } as Partial<Record<Stat, number>>;
     }, [mainStat, selectedMainStat, selectedFragment]);
 
     const [isSubStat1Open, setIsSubStat1Open] = useState(false);
-    const [selectedSubStat1, setSelectedSubStat1] = useState<Partial<SubStat> | null>(null);
+    const [selectedSubStat1, setSelectedSubStat1] = useState<Partial<SubStat> | undefined>(undefined);
     const [subStat1, setSubStat1] = useState<number>(0);
 
-    /* function setSelectedFragmentSubStat1(subStat: Partial<SubStat>, subStatValue: number) {
-        selectedFragment?.setNewSubstat(1 - 1, subStat, subStatValue); // index 0
-    } */
-
     useEffect(() => {
-        if (!selectedFragment || selectedSubStat1 == null) return;
-
-        if (typeof selectedFragment.setNewSubstat === "function") {
-            selectedFragment.setNewSubstat(0, selectedSubStat1, subStat1);
-        } else {
-            selectedFragment.subStats[0] = { [selectedSubStat1]: subStat1 } as Partial<Record<SubStat, number>>;
-        }
+        if (!selectedFragment || selectedSubStat1 == null || selectedSubStat1 == undefined) return;
+        selectedFragment.subStats[0] = { [selectedSubStat1]: subStat1 } as Partial<Record<SubStat, number>>;
     }, [subStat1, selectedSubStat1, selectedFragment]);
     
     const [isSubStat2Open, setIsSubStat2Open] = useState(false);
-    const [selectedSubStat2, setSelectedSubStat2] = useState<Partial<SubStat> | null>(null);
+    const [selectedSubStat2, setSelectedSubStat2] = useState<Partial<SubStat> | undefined>(undefined);
     const [subStat2, setSubStat2] = useState<number>(0);
 
-    /* function setSelectedFragmentSubStat2(subStat: Partial<SubStat>, subStatValue: number) {
-        selectedFragment?.setNewSubstat(2 - 1, subStat, subStatValue); // index 1
-    } */
-
     useEffect(() => {
-        if (!selectedFragment || selectedSubStat2 == null) return;
-
-        if (typeof selectedFragment.setNewSubstat === "function") {
-            selectedFragment.setNewSubstat(1, selectedSubStat2, subStat2);
-        } else {
-            selectedFragment.subStats[1] = { [selectedSubStat2]: subStat2 } as Partial<Record<SubStat, number>>;
-        }
+        if (!selectedFragment || selectedSubStat2 == null || selectedSubStat2 == undefined) return;
+        selectedFragment.subStats[1] = { [selectedSubStat2]: subStat2 } as Partial<Record<SubStat, number>>;
     }, [subStat2, selectedSubStat2, selectedFragment]);
     
     const [isSubStat3Open, setIsSubStat3Open] = useState(false);
-    const [selectedSubStat3, setSelectedSubStat3] = useState<Partial<SubStat> | null>(null);
+    const [selectedSubStat3, setSelectedSubStat3] = useState<Partial<SubStat> | undefined>(undefined);
     const [subStat3, setSubStat3] = useState<number>(0);
 
-    /* function setSelectedFragmentSubStat3(subStat: Partial<SubStat>, subStatValue: number) {
-        selectedFragment?.setNewSubstat(3 - 1, subStat, subStatValue); // index 2
-    } */
-
     useEffect(() => {
-        if (!selectedFragment || selectedSubStat3 == null) return;
-
-        if (typeof selectedFragment.setNewSubstat === "function") {
-            selectedFragment.setNewSubstat(2, selectedSubStat3, subStat3);
-        } else {
-            selectedFragment.subStats[2] = { [selectedSubStat3]: subStat3 } as Partial<Record<SubStat, number>>;
-        }
+        if (!selectedFragment || selectedSubStat3 == null || selectedSubStat3 == undefined) return;
+        selectedFragment.subStats[2] = { [selectedSubStat3]: subStat3 } as Partial<Record<SubStat, number>>;
     }, [subStat3, selectedSubStat3, selectedFragment]);
     
     const [isSubStat4Open, setIsSubStat4Open] = useState(false);
-    const [selectedSubStat4, setSelectedSubStat4] = useState<Partial<SubStat> | null>(null);
+    const [selectedSubStat4, setSelectedSubStat4] = useState<Partial<SubStat> | undefined>(undefined);
     const [subStat4, setSubStat4] = useState<number>(0);
 
-    /* function setSelectedFragmentSubStat4(subStat: Partial<SubStat>, subStatValue: number) {
-        selectedFragment?.setNewSubstat(4 - 1, subStat, subStatValue); // index 3
-    } */
-
     useEffect(() => {
-        if (!selectedFragment || selectedSubStat4 == null) return;
-
-        if (typeof selectedFragment.setNewSubstat === "function") {
-            selectedFragment.setNewSubstat(3, selectedSubStat4, subStat4);
-        } else {
-            selectedFragment.subStats[3] = { [selectedSubStat4]: subStat4 } as Partial<Record<SubStat, number>>;
-        }
+        if (!selectedFragment || selectedSubStat4 == null || selectedSubStat4 == undefined) return;
+        selectedFragment.subStats[3] = { [selectedSubStat4]: subStat4 } as Partial<Record<SubStat, number>>;
     }, [subStat4, selectedSubStat4, selectedFragment]);
 
-    function saveFragment(fragment: BaseMemoryFragment) { // TODO change to IMemoryFragment + initialize class
+    function saveFragment(fragment: MemoryFragment) { // TODO change to IMemoryFragment + initialize class
         const Fragments = JSON.parse(localStorage.getItem("fragments") || "[]");
         console.log(fragment)
         Fragments.push(
@@ -251,6 +216,7 @@ export default function AddFragment(
                         setIsSetOpen={setIsSetOpen}
                         selectedSet={selectedSet}
                         setSelectedSet={setSelectedSet}
+                        disable={true}
                     />
 
                     <PieceSelector
@@ -260,6 +226,7 @@ export default function AddFragment(
                         setIsPieceTypeOpen={setIsPieceTypeOpen}
                         selectedPieceType={selectedPieceType}
                         setSelectedPieceType={setSelectedPieceType}
+                        disable={true}
                     />
                 </div>
                 
@@ -275,6 +242,7 @@ export default function AddFragment(
                         setSelectedMainStat={setSelectedMainStat}
                         mainStat={mainStat}
                         setMainStat={setMainStat}
+                        selectedFragment={selectedFragment}
                     />
                 }
             </div>

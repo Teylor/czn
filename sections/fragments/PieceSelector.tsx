@@ -1,7 +1,7 @@
 import { JSX } from "react";
 import Image from "next/image";
-import { PIECE_TYPES, SetType } from "@/lib/MemoryFragments";
-import { Piece } from "../domain/memoryFragment/MemoryFragment";
+import { PIECE_TYPES } from "@/lib/MemoryFragments";
+import { Piece, SetType } from "../domain/memoryFragment/MemoryFragment";
 
 export default function PieceSelector(
 {
@@ -9,22 +9,25 @@ export default function PieceSelector(
     isPieceTypeOpen,
     setIsPieceTypeOpen,
     selectedPieceType,
-    setSelectedPieceType
+    setSelectedPieceType,
+    disable
 }:
 {
-    selectedSet: SetType | null,
+    selectedSet: SetType | undefined,
     isPieceTypeOpen: boolean,
     setIsPieceTypeOpen: (isPieceTypeOpen: boolean) => void,
-    selectedPieceType: Piece | null,
+    selectedPieceType: Piece | undefined,
     setSelectedPieceType: (selectedPieceType: Piece) => void
+    disable: boolean
 }): JSX.Element {
     return (
         <div className="grid md:col-start-4">
         {
-        selectedSet != SetType.NULL && (
+        selectedSet && (
             <div className="text-center">
             <h1>Piece Type</h1>
             <button 
+                disabled={disable}
                 onClick={() => setIsPieceTypeOpen(!isPieceTypeOpen)}
                 className="w-50 px-3 py-2 border border-zinc-300 rounded-md bg-white text-sm text-zinc-900 text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
             >

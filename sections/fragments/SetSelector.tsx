@@ -1,25 +1,28 @@
 import { JSX } from "react"
 import Image from "next/image";
 import { SetType } from "../domain/memoryFragment/MemoryFragment";
-import { FRAGMENTS_SETS } from "@/lib/MemoryFragments"; // TODO move to memory fragment?
+import { FRAGMENTS_SETS } from "@/lib/MemoryFragments";
 
 export default function SetSelector({
     isSetOpen,
     setIsSetOpen,
     selectedSet,
-    setSelectedSet
+    setSelectedSet,
+    disable
 }:
 {
     isSetOpen: boolean,
     setIsSetOpen: (isSubStatOpen: boolean) => void,
-    selectedSet: SetType | null,
-    setSelectedSet: (selectedSet: SetType | null) => void
+    selectedSet: SetType | undefined,
+    setSelectedSet: (selectedSet: SetType | undefined) => void,
+    disable: boolean
 }):JSX.Element {
     return (
         <div className="grid md:col-start-2">
             <div>
                 <h1 className="text-center">Set</h1>
                 <button 
+                    disabled={disable}
                     onClick={() => setIsSetOpen(!isSetOpen)}
                     className="w-50 px-3 py-2 border border-zinc-300 rounded-md bg-white text-sm text-zinc-900 text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
                 >
