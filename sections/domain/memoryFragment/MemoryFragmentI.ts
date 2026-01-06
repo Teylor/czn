@@ -28,6 +28,7 @@ export class MemoryFragmentI extends MemoryFragment {
         /* let provitional =  [
             SubStat.DEFENSE,
             SubStat.HP,
+            SubStat.ATTACK_PERCENT,
             SubStat.DEFENSE_PERCENT,
             SubStat.HP_PERCENT,
             SubStat.CRIT_RATE,
@@ -40,6 +41,7 @@ export class MemoryFragmentI extends MemoryFragment {
         return [
             SubStat.DEFENSE,
             SubStat.HP,
+            SubStat.ATTACK_PERCENT,
             SubStat.DEFENSE_PERCENT,
             SubStat.HP_PERCENT,
             SubStat.CRIT_RATE,

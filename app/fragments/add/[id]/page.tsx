@@ -232,7 +232,7 @@ export default function AddFragment(
                 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
                 {
-                selectedPieceType != null
+                selectedPieceType
                 && <MainStatSelector
                         key="mainSelector"
                         isMainStatOpen={isMainStatOpen}
@@ -247,7 +247,7 @@ export default function AddFragment(
                 }
             </div>
 
-                {selectedPieceType != null
+                {selectedPieceType
                 && (
                 <div className="grid grid-cols-1 gap-1">
                     <div className="my-8 grid grid-cols-1 md:grid-cols-2 gap-1">

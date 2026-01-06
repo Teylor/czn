@@ -1,6 +1,5 @@
 import { JSX } from "react";
 import { MemoryFragment, Piece, Stat } from "../domain/memoryFragment/MemoryFragment";
-//import { FIVE_POSSIBLE_STATS, FOUR_POSSIBLE_STATS, SIX_POSSIBLE_STATS } from "@/lib/MemoryFragments"; /* TODO remove, change for custom + change posible to stat */
 
 export default function MainStatSelector(
     {
@@ -25,11 +24,11 @@ export default function MainStatSelector(
     }
 ): JSX.Element {
     return (
-        <div className="my-8 grid col-start-2 gap-1">
+        <div className="grid col-start-3 gap-1">
         {
             isMainStatOpen ? (
                 <div className="w-100 top-full left-0 right-0 mt-1 border border-zinc-300 rounded-md bg-white z-10 max-h-64 overflow-y-auto">
-                    {selectedFragment?.getPossibleStats().map((iv_stat: Stat) => ( /* TODO */
+                    {selectedFragment?.getPossibleStats().map((iv_stat: Stat) => (
                         <button
                             key={`IV-${iv_stat}`}
                             onClick={() => {

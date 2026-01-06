@@ -1,10 +1,10 @@
 "use client";
 
-import { Combatant } from "@/lib/Combatants";
 import Link from "next/link";
 import Image from "next/image";
 import { JSX, useEffect, useState } from "react";
 import { IoMdAdd } from 'react-icons/io';
+import { Combatant } from "@/lib/Combatants";
 
 export default function Combatants(): JSX.Element {
 

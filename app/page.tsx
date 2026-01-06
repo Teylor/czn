@@ -40,16 +40,16 @@ export default function Home() {
         </div>
       </section>
        {/* TODO styles: push to bottom */}
-      <footer className="my-8 container text-center ">
-        <button
+      <footer className="my-8 container text-center "> {/* TODO clear data, tutorial, etc */}
+        {/* <button
         key="clear-data-button"
           className="btn-primary"
           onClick={async () => {
             localStorage.clear();
           }}
         >
-          Clear Data
-        </button>
+          Clear Data (Make Warning)
+        </button> */}
       </footer>
     </>
   );

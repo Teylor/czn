@@ -21,7 +21,7 @@ export default function PieceSelector(
     disable: boolean
 }): JSX.Element {
     return (
-        <div className="grid md:col-start-4">
+        <div className="relative grid md:col-start-5">
         {
         selectedSet && (
             <div className="text-center">
@@ -43,7 +43,7 @@ export default function PieceSelector(
         }
         {
             selectedSet && isPieceTypeOpen && (
-                <div className="w-100 top-full left-0 right-0 mt-1 border border-zinc-300 rounded-md bg-white z-10 max-h-64 overflow-y-auto">
+                <div className="absolute w-100 top-full left-0 right-0 mt-1 border border-zinc-300 rounded-md bg-white z-11 max-h-64 overflow-y-auto">
                     {PIECE_TYPES.map((pt) => (
                         <button
                             key={pt.id}
