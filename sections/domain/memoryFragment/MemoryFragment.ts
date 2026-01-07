@@ -2,7 +2,17 @@ export enum SetType { // TODO add all sets
     ATK = "atk",
     DEF = "def",
     HP = "hp",
+    CRIT_DAMAGE = "critd",
+    SCRAB = "scrab",
+    AGONY = "agony",
     LINE_OF_JUSTICE = "loj",
+    VOID_OFFERING = "voidoff",
+    VOID_ORB = "voidorb",
+    INSTINCT_JUDGMENT = "instjud",
+    CONQUEROR_CRIT = "conqcrit",
+    ORDER_BULLET = "ordbull",
+    INSTINCT_GROWTH = 'instgrow',
+    PASSION_SPARK = 'passpark',
 }
 
 export enum Rarity {
@@ -152,6 +162,15 @@ export interface MemoryFragmentsSearch {
   IV: LF,
   V: LF,
   VI: LF
+}
+
+export interface MemoryFragmentsEquipped {
+  I: CraftedMemoryFragment | undefined,
+  II: CraftedMemoryFragment | undefined,
+  III: CraftedMemoryFragment | undefined,
+  IV: CraftedMemoryFragment | undefined,
+  V: CraftedMemoryFragment | undefined,
+  VI: CraftedMemoryFragment | undefined
 }
 
 export interface BisMemoryFragments {
