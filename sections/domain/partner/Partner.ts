@@ -28,14 +28,16 @@ export interface IPartner {
 export class Partner implements IPartner {
     readonly id: string;
     readonly img: string;
+    readonly alt: string;
     name: string;
     level: number;
     ego: number;
-    constructor(name: string, level: number, ego: number) {
-        this.id = `P-${name}-${level}`;
+    constructor(name: string, level: number, ego: number) { // TODO on construct get basic stats of each partn
+        this.id = `P-${name}-${Date.now()}`;
         this.img = `/partners/${name.toLowerCase()}.png`;
         this.name = name;
         this.level = level < 0 ? 0 : level > 60 ? 60 : level;
         this.ego = ego < 0 ? 0 : ego > 4 ? 4 : ego;
+        this.alt = `${this.name} - ${this.level} Lvl ${this.ego} Ego`;
     }
 }
