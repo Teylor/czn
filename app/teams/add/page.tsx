@@ -11,7 +11,6 @@ import MemoryFragmentsBis from "@/sections/teams/MemoryFragmentsBis";
 import SetsSelector from "@/sections/teams/SetsSelector";
 import useTeamMembers from "@/hooks/useTeamMembers";
 
-/* TODO tests & styles */
 export default function Teams(
   {
 
@@ -22,7 +21,6 @@ export default function Teams(
 
     const { members, setCombatantAt, setPartnerAt, setMFAt } = useTeamMembers();
 
-    // TODO create customHook for setsSystem & toogle
     const [mfSets1, setSets1] = useState<SetType[] | undefined>(undefined);
     const [mfSets2, setSets2] = useState<SetType[] | undefined>(undefined);
     const [mfSets3, setSets3] = useState<SetType[] | undefined>(undefined);
@@ -100,7 +98,7 @@ export default function Teams(
                   </span>
                   </div>
                 </div>
-                <div className="md:col-span-6"> {/* TODO setSelector custom hook */}
+                <div className="md:col-span-6">
                   <SetsSelector
                     key={`Teams-SS-${i + 1}`}
                     uniqueKey={`Teams-SS-${i + 1}`}
@@ -142,9 +140,7 @@ export default function Teams(
           </div>
         </div>
         <button className="btn-primary" 
-          onClick={() => {
-            saveTeam()
-          }}>
+          onClick={() => {saveTeam()}}>
           Save
         </button>
         <Link href="/teams" className="btn-primary">

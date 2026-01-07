@@ -1,4 +1,4 @@
-export enum SetType { // TODO add all sets
+export enum SetType {
     ATK = "atk",
     DEF = "def",
     HP = "hp",

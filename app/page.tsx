@@ -39,7 +39,6 @@ export default function Home() {
           </Link>
         </div>
       </section>
-       {/* TODO styles: push to bottom */}
       <footer className="my-8 container text-center "> {/* TODO clear data, tutorial, etc */}
         {/* <button
         key="clear-data-button"

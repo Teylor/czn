@@ -1,16 +1,4 @@
-export interface Partner {
-  id: string;
-  name: string;
-  type: string; // TODO type: "striker" | "hunter" | "controller" | "ranger" | "psionic" | "vanguard";
-  rarity?: number; // rarity?: 3 | 4 | 5;
-  passive?: string;
-  skill?: string;
-  ego?: number; // ego?: 0 | 1 | 2 | 3 | 4;
-  level?: number;
-  img?: string;
-}
-
-export const PARTNERS = [
+export const PARTNERS = [ // TODO add all partners
   { 
     id: "yuri", 
     name: "Yuri", 
