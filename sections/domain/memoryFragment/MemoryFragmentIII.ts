@@ -24,20 +24,8 @@ export class MemoryFragmentIII extends MemoryFragment {
         ];
     }
 
-    getPossibleSubStats(): SubStat[] { // TODO remove selecteds
-        /* let provitional =  [
-            SubStat.ATTACK,
-            SubStat.DEFENSE,
-            SubStat.ATTACK_PERCENT,
-            SubStat.DEFENSE_PERCENT,
-            SubStat.HP_PERCENT,
-            SubStat.CRIT_RATE,
-            SubStat.CRIT_DAMAGE,
-            SubStat.EXTRA_DAMAGE,
-            SubStat.DAMAGE_OVER_TIME,
-            SubStat.EGO_RECOVERY
-        ]
-        return provitional.filter(p => p) */
+    getPossibleSubStats(): SubStat[] {
+        let otherSubsStats = this.subStats.map(ss => ss && Object.keys(ss)[0] as SubStat);
         return [
             SubStat.ATTACK,
             SubStat.DEFENSE,
@@ -50,5 +38,6 @@ export class MemoryFragmentIII extends MemoryFragment {
             SubStat.DAMAGE_OVER_TIME,
             SubStat.EGO_RECOVERY
         ]
+        .filter(ss => ss && !otherSubsStats.includes(ss));
     }
 }

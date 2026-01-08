@@ -97,6 +97,7 @@ export abstract class MemoryFragment implements IMemoryFragment {
         this.rarity = rarity;
         this.level = rarity === Rarity.RARE ? 4 : 5;
         this.subStats = [];
+        this.inTeams = [];
         this.id = `MF-${this.roman}-${this.setType}-${Date.now()}`;
         this.img = `/mf/${this.setType}/${this.piece}.png`;
         
@@ -124,7 +125,7 @@ export class CraftedMemoryFragment implements IMemoryFragment {
     readonly inTeams: number[]
 
     constructor(memoryFragment: IMemoryFragment) {
-        this.id = memoryFragment.id; /* TODO change by main stat and subs instead of date */
+        this.id = memoryFragment.id;
         this.setType = memoryFragment.setType;
         this.piece = memoryFragment.piece;
         this.roman = Piece[memoryFragment.piece];
@@ -144,10 +145,26 @@ export class CraftedMemoryFragment implements IMemoryFragment {
     getSubStatsTypes(): (SubStat | undefined)[] {
       return this.subStats.map(ss => ss && Object.keys(ss)[0] as SubStat);
     }
+
+    getPossibleSubStats(): SubStat[] | undefined[] | null[] {
+      return [
+            SubStat.DEFENSE,
+            SubStat.HP,
+            SubStat.ATTACK_PERCENT,
+            SubStat.DEFENSE_PERCENT,
+            SubStat.HP_PERCENT,
+            SubStat.CRIT_RATE,
+            SubStat.CRIT_DAMAGE,
+            SubStat.EXTRA_DAMAGE,
+            SubStat.DAMAGE_OVER_TIME,
+            SubStat.EGO_RECOVERY
+        ]
+        .filter(ss => ss && Object.keys(this.mainStat)[0] !== ss && !this.getSubStatsTypes().includes(ss));
+    }
 }
 
 interface LF {
-  mainStat: Stat, // Obligate
+  mainStat: Stat,
   subStat1: SubStat,
   subStat2: SubStat,
   subStat3: SubStat,
@@ -246,21 +263,19 @@ export const searchBisMFs = (search: MemoryFragmentsSearch): BisMemoryFragments 
         .filter(smf => smf.score > 0)
         .sort((a, b) => b.score - a.score)
       );
-  //console.log('fragmentsByPiece', fragmentsByPiece)
 
   // i is the index of each piece i = 0 piece 1 (I) ... i = 5 piece 6 (VI)
-  
-  for (let i = 0; i <= 5; ++i) { // TODO get the desireds from fragments? into result
+  for (let i = 0; i <= 5; ++i) {
     const bis: CraftedMemoryFragment[] = Object.values(
         fragmentsByPiece[i]
           .reduce((acc: any, item: ScoredMemoryFragment) => {
-            // 2. Group by "SetType" and only keep top 3
+            // 2. Group by "SetType" and only keep top 5
             if (!acc[item.setType]) acc[item.setType] = [];
-            if (acc[item.setType].length < 3) acc[item.setType].push(item);
+            if (acc[item.setType].length < 5) acc[item.setType].push(item);
             return acc;
           }, {})
       ).flat() as CraftedMemoryFragment[];
-    //console.log('bis', bis)
+
     switch(i) {
       case 0:
         result.I = bis;

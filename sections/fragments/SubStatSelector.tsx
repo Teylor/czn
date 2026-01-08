@@ -13,7 +13,7 @@ export default function SubStatSelector(
     selectedFragment
   }: 
   {
-    substatNumber: string,
+    substatNumber: number,
     isSubStatOpen: boolean,
     setIsSubStatOpen: (isSubStatOpen: boolean) => void,
     selectedSubStat: Partial<SubStat> | undefined,
@@ -23,14 +23,14 @@ export default function SubStatSelector(
     selectedFragment: MemoryFragment | undefined
   }): JSX.Element {
 
-  return (
+          return (
     <div className="grid grid-cols-1 md:grid-cols-2">
         <div className="grid grid-cols-1 md:grid-cols-2">
         {
         isSubStatOpen ? (
-            selectedFragment?.getPossibleSubStats().map((iv_s_stat: SubStat) => ( /* TODO get list of correct sub stats (also remove main stat) */
+            selectedFragment?.getPossibleSubStats()?.map((iv_s_stat: SubStat) => ( /* TODO get list of correct sub stats (also remove main stat) */
                 <button
-                    key={`SS-${substatNumber}-${iv_s_stat}-${Date.now()}`} /* TODO revisar key */
+                    key={`SS-${substatNumber}-${iv_s_stat}`}
                     onClick={() => {
                         setSelectedSubStat(iv_s_stat);
                         setIsSubStatOpen(false);
@@ -41,8 +41,8 @@ export default function SubStatSelector(
                 </button>
             ))
             ) : (
-                <button onClick={() => setIsSubStatOpen(true)} className="w-auto px-3 py-2 text-left flex items-center gap-2 hover:bg-zinc-100 border-b border-zinc-200 last:border-b-0"> {/* TODO styles */}
-                    {selectedSubStat || "Select Sub Stat 4"}
+                <button onClick={() => setIsSubStatOpen(true)} className="w-auto px-3 py-2 text-left flex items-center gap-2 hover:bg-zinc-100 border-b border-zinc-200 last:border-b-0">
+                    {selectedSubStat || `Select Sub Stat ${substatNumber}`}
                 </button>
             )
         }

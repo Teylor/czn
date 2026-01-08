@@ -28,8 +28,11 @@ export default function MemoryFragments(
 
   return (
         <>
-          <h1>Memory Fragments</h1>
           <section className="my-8 container">
+            <Link href="/fragments/add" className="btn-primary m-5">
+                <IoMdAdd className="mr-2" />
+                Add Memory Fragments
+            </Link>
             <div className="grid grid-cols-1 gap-1 sm:grid-cols-3 md:grid-cols-5">
               {
                 fragments.map((fragment: MemoryFragment) => (
@@ -43,7 +46,7 @@ export default function MemoryFragments(
                     </button>
                     <Link
                     href={`/fragments/add/${fragment?.id}`}
-                    key={fragment?.id} className="flex flex-col items-center">
+                    key={`a-${fragment?.id}`} className="flex flex-col items-center">
                       <h2 className="mb-2">{fragment?.setType}</h2>
                       <Image src={`${fragment?.img}`} alt={fragment?.id} width={64} height={64} />
                       <p>Level: {fragment?.level}</p>
@@ -58,13 +61,8 @@ export default function MemoryFragments(
                 ))
               }
             </div>
-            
-            <Link href="/fragments/add" className="btn-primary m-10">
-              <IoMdAdd className="mr-2" />
-              Add Memory Fragments
-            </Link>
           </section>
-          <Link href="/" className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors bg-black rounded-md hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black">
+          <Link href="/" className="btn-primary">
             Home
           </Link>
         </>

@@ -10,7 +10,8 @@ export default function MainStatSelector(
         setSelectedMainStat,
         mainStat,
         setMainStat,
-        selectedFragment
+        selectedFragment,
+        disable
     }:
     {
         isMainStatOpen: boolean,
@@ -20,7 +21,8 @@ export default function MainStatSelector(
         setSelectedMainStat: (selectedMainStat: Stat) => void,
         mainStat: number,
         setMainStat: (mainStat: number) => void,
-        selectedFragment: MemoryFragment | undefined
+        selectedFragment: MemoryFragment | undefined,
+        disable: boolean
     }
 ): JSX.Element {
     return (
@@ -42,8 +44,10 @@ export default function MainStatSelector(
                     ))}
                 </div>
             ) : (
-                <button onClick={() => (selectedPieceType === Piece.IV || selectedPieceType === Piece.V || selectedPieceType === Piece.VI) 
-                && setIsMainStatOpen(true)} className="w-100 px-3 py-2 text-left flex items-center gap-2 hover:bg-zinc-100 border-b border-zinc-200 last:border-b-0"> {/* TODO styles */}
+                <button 
+                disabled={disable}
+                onClick={() => (selectedPieceType === Piece.IV || selectedPieceType === Piece.V || selectedPieceType === Piece.VI) 
+                && setIsMainStatOpen(true)} className="w-100 px-3 py-2 text-left flex items-center gap-2 hover:bg-zinc-100 border-b border-zinc-200 last:border-b-0">
                     {selectedMainStat}
                 </button>
             )
