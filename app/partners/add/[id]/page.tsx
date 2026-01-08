@@ -72,16 +72,16 @@ export default function AddPartner({ params }: { params: Promise<{ id: string }>
                         </div>
                     )}
                 </div>
-                <h1>Level</h1>
-                <input type="number" className="w-32 px-3 py-2 border border-zinc-300 rounded-md bg-white text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-black appearance-none" 
+                <h1 className="m-1">Level</h1>
+                <input type="number" className="m-1 w-32 px-3 py-2 border border-zinc-300 rounded-md bg-white text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-black appearance-none" 
                     min={1} max={60} value={level} 
                     onChange={(e) => setLevel(parseInt(e.target.value))} />
-                <h1>Ego</h1>
-                <input type="number" className="w-32 px-3 py-2 border border-zinc-300 rounded-md bg-white text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-black appearance-none" 
+                <h1 className="m-1">Ego</h1>
+                <input type="number" className="m-1 w-32 px-3 py-2 border border-zinc-300 rounded-md bg-white text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-black appearance-none" 
                     min={0} max={6} value={ego} 
                     onChange={(e) => setEgo(parseInt(e.target.value))} />
                 <button 
-                    className="btn-primary"
+                    className="m-1 btn-primary"
                     onClick={() => {
                         if (partner) {
                             savePartner(partner);
@@ -90,7 +90,7 @@ export default function AddPartner({ params }: { params: Promise<{ id: string }>
                     Save
                 </button>
             </div>
-          <Link href="/partners" className="btn-primary">
+          <Link href="/partners" className="m-1 btn-primary">
             Cancel
           </Link>
         </>

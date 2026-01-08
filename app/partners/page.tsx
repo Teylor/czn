@@ -23,8 +23,11 @@ export default function Partners(): JSX.Element {
 
   return (
       <>
-        <header>Partners</header>
         <section className="my-8 container">
+          <Link href="/partners/add" className="m-1 btn-primary">
+              <IoMdAdd className="mr-2" />
+              Add Partner
+            </Link>
           <div className="grid grid-cols-1 gap-1 sm:grid-cols-3 md:grid-cols-5">
             {
               partners.map((partner) => (
@@ -50,13 +53,9 @@ export default function Partners(): JSX.Element {
               ))
             }
           </div>
-            <Link href="/partners/add" className="btn-primary">
-              <IoMdAdd className="mr-2" />
-              Add Partner
-            </Link>
         </section>
 
-        <Link href="/" className="btn-primary">
+        <Link href="/" className="m-1 btn-primary">
           Home
         </Link>
       </>

@@ -1,4 +1,4 @@
-enum ParterType {
+export enum ParterType {
     STRIKER = "striker",
     HUNTER = "hunter",
     CONTROLLER = "controller",
@@ -7,7 +7,7 @@ enum ParterType {
     VANGUARD = "vanguard",
 }
 
-enum PartnerRarity {
+export enum PartnerRarity {
     THREE_STAR = 3,
     FOUR_STAR = 4,
     FIVE_STAR = 5,

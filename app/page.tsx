@@ -39,16 +39,7 @@ export default function Home() {
           </Link>
         </div>
       </section>
-      <footer className="my-8 container text-center "> {/* TODO clear data, tutorial, etc */}
-        {/* <button
-        key="clear-data-button"
-          className="btn-primary"
-          onClick={async () => {
-            localStorage.clear();
-          }}
-        >
-          Clear Data (Make Warning)
-        </button> */}
+      <footer className="my-8 container text-center ">
       </footer>
     </>
   );

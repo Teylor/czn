@@ -23,8 +23,11 @@ export default function Combatants(): JSX.Element {
 
   return (
       <>
-        <header>Combatants</header>
         <section className="my-8 container">
+          <Link href="/combatants/add" className="m-1 btn-primary">
+              <IoMdAdd className="mr-2" />
+              Add Combatant
+            </Link>
           <div className="grid grid-cols-1 gap-1 sm:grid-cols-3 md:grid-cols-5">
             {
               combatants.map((combatant) => (
@@ -50,13 +53,9 @@ export default function Combatants(): JSX.Element {
               ))
             }
           </div>
-            <Link href="/combatants/add" className="btn-primary">
-              <IoMdAdd className="mr-2" />
-              Add Combatant
-            </Link>
         </section>
 
-        <Link href="/" className="btn-primary">
+        <Link href="/" className="m-1 btn-primary">
           Home
         </Link>
       </>
