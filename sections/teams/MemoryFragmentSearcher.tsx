@@ -1,13 +1,26 @@
 "use client"
 
 import { JSX, useState, useEffect } from "react";
-import { CraftedMemoryFragment, Piece, Rarity, SetType, Stat, SubStat } from "../domain/memoryFragment/MemoryFragment";
+import { Piece, Rarity, SetType, Stat, SubStat } from "../domain/memoryFragment/MemoryFragment";
 import { MemoryFragmentI } from "../domain/memoryFragment/MemoryFragmentI";
 import { MemoryFragmentII } from "../domain/memoryFragment/MemoryFragmentII";
 import { MemoryFragmentIII } from "../domain/memoryFragment/MemoryFragmentIII";
 import { MemoryFragmentIV } from "../domain/memoryFragment/MemoryFragmentIV";
 import { MemoryFragmentV } from "../domain/memoryFragment/MemoryFragmentV";
 import { MemoryFragmentVI } from "../domain/memoryFragment/MemoryFragmentVI";
+
+function getDefaultMainStat(piece: Piece): Stat | undefined {
+    switch(piece) {
+        case Piece.I:
+            return Stat.ATTACK;
+        case Piece.II:
+            return Stat.DEFENSE;
+        case Piece.III:
+            return Stat.HP;
+        default:
+            return undefined;
+    }
+}
 
 export default function MemoryFragmentSearcher(
   {
@@ -18,12 +31,25 @@ export default function MemoryFragmentSearcher(
   }: {
     uniqueKey: string,
     disable: boolean,
-    piece: number,
+    piece: Piece,
     setFilled: (filled: boolean) => void
   }): JSX.Element {
 
+    const [isOpenMainStat, setIsOpenMainStat] = useState(false);
+    const [selectedMainStat, setSelectedMainStat] = useState<Stat | undefined>(getDefaultMainStat(piece));
+    const [isOpenSubStat1, setIsOpenSubStat1] = useState(false);
+    const [selectedSubStat1, setSelectedSubStat1] = useState<SubStat | undefined>(undefined);
+    const [isOpenSubStat2, setIsOpenSubStat2] = useState(false);
+    const [selectedSubStat2, setSelectedSubStat2] = useState<SubStat | undefined>(undefined);
+    const [isOpenSubStat3, setIsOpenSubStat3] = useState(false);
+    const [selectedSubStat3, setSelectedSubStat3] = useState<SubStat | undefined>(undefined);
+    const [isOpenSubStat4, setIsOpenSubStat4] = useState(false);
+    const [selectedSubStat4, setSelectedSubStat4] = useState<SubStat | undefined>(undefined);
+
     const entity = new MemoryFragmentI(SetType.ATK, Piece.I, Rarity.LEGENDARY) as any;
     switch(piece) {
+        case Piece.I:
+            break;
         case Piece.II:
             Object.setPrototypeOf(entity, MemoryFragmentII.prototype);
             break;
@@ -43,20 +69,9 @@ export default function MemoryFragmentSearcher(
             break;
     }
 
-    const [isOpenMainStat, setIsOpenMainStat] = useState(false);
-    const [selectedMainStat, setSelectedMainStat] = useState<Stat | undefined>(undefined);
-    const [isOpenSubStat1, setIsOpenSubStat1] = useState(false);
-    const [selectedSubStat1, setSelectedSubStat1] = useState<SubStat | undefined>(undefined);
-    const [isOpenSubStat2, setIsOpenSubStat2] = useState(false);
-    const [selectedSubStat2, setSelectedSubStat2] = useState<SubStat | undefined>(undefined);
-    const [isOpenSubStat3, setIsOpenSubStat3] = useState(false);
-    const [selectedSubStat3, setSelectedSubStat3] = useState<SubStat | undefined>(undefined);
-    const [isOpenSubStat4, setIsOpenSubStat4] = useState(false);
-    const [selectedSubStat4, setSelectedSubStat4] = useState<SubStat | undefined>(undefined);
-
     useEffect(() => {
-        setFilled(selectedMainStat != undefined && selectedSubStat1 != undefined /* && selectedSubStat2 != undefined && selectedSubStat3 != undefined && selectedSubStat4 != undefined */)
-    }, [selectedMainStat, selectedSubStat1/* , selectedSubStat2, selectedSubStat3, selectedSubStat4 */])
+        setFilled(selectedMainStat != undefined /*&& selectedSubStat1 != undefined && selectedSubStat2 != undefined && selectedSubStat3 != undefined && selectedSubStat4 != undefined */)
+    }, [selectedMainStat/* , selectedSubStat1, selectedSubStat2, selectedSubStat3, selectedSubStat4 */])
 
   return (
     <>

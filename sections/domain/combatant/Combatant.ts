@@ -1,4 +1,4 @@
-enum CombatantType {
+export enum CombatantType {
     STRIKER = "striker",
     HUNTER = "hunter",
     CONTROLLER = "controller",
@@ -45,6 +45,6 @@ export class Combatant implements ICombatant {
         this.name = name;
         this.level = level < 1 ? 1 : level > 60 ? 60 : level;
         this.ego = ego < 0 ? 0 : ego > 6 ? 6 : ego;
-        this.alt = `${this.name} - ${this.level} Lvl ${this.ego} Ego`;
+        this.alt = `${this.name} Lvl: ${this.level} Ego: ${this.ego}`;
     }
 }

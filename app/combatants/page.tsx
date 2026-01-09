@@ -11,7 +11,7 @@ export default function Combatants(): JSX.Element {
   const [combatants, setCombatants] = useState<Combatant[]>([]);
   
   useEffect(() => {
-    const Combatants = JSON.parse(localStorage.getItem("combatants") || "[]");
+      const Combatants = JSON.parse(localStorage.getItem("combatants") || "[]");
       setCombatants(Combatants);
     }, []);
 
@@ -25,9 +25,9 @@ export default function Combatants(): JSX.Element {
       <>
         <section className="my-8 container">
           <Link href="/combatants/add" className="m-1 btn-primary">
-              <IoMdAdd className="mr-2" />
-              Add Combatant
-            </Link>
+            <IoMdAdd className="mr-2" />
+            Add Combatant
+          </Link>
           <div className="grid grid-cols-1 gap-1 sm:grid-cols-3 md:grid-cols-5">
             {
               combatants.map((combatant) => (

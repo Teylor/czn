@@ -16,7 +16,7 @@ export default function MemoryFragmentSelector(
     uniqueKey: string,
     disable: boolean,
     sets: SetType[] | undefined,
-    piece: number,
+    piece: Piece,
     setMF: (mf: CraftedMemoryFragment | undefined) => void,
     possibleMFs?: CraftedMemoryFragment[] | undefined
   }): JSX.Element {
@@ -34,6 +34,27 @@ export default function MemoryFragmentSelector(
         
     }, []);
 
+    /* TODO print border green if free/ orange if in other team / red if in same team */
+    function mfIsUsed(mfId: string | undefined): boolean {
+        if (!mfId) return false;
+        const teamsRaw = JSON.parse(localStorage.getItem("teams") || "[]");
+        const teams = Array.isArray(teamsRaw) ? teamsRaw : [];
+        for (const team of teams) {
+            if (!team || typeof team !== 'object') continue;
+            const memberKeys = Object.keys(team || {});
+            for (const memberKey of memberKeys) {
+                const member = team[memberKey];
+                if (!member || !member.mfs || typeof member.mfs !== 'object') continue;
+                const mfKeys = Object.keys(member.mfs || {});
+                for (const mfKey of mfKeys) {
+                    const mfObj = member.mfs[mfKey];
+                    if (mfObj && mfObj.id === mfId) return true;
+                }
+            }
+        }
+        return false;
+    }
+
     const [isOpen, setIsOpen] = useState(false);
     const [selectedMF, setSelectedMF] = useState<CraftedMemoryFragment | undefined>(undefined)
 
@@ -49,7 +70,6 @@ export default function MemoryFragmentSelector(
         }
     }
 
-    /* TODO print border green if free/ orange if in other team / red if in same team */
   return (
     <>
         <div className="md:col-span-1">
@@ -59,17 +79,17 @@ export default function MemoryFragmentSelector(
             <button 
                 disabled={disable}
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-50 px-3 py-8 border border-zinc-300 rounded-md bg-white text-sm text-zinc-900 text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
+                className={`w-50 px-3 py-8 rounded-md bg-white text-sm text-zinc-900 text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-black focus:border-black border ${mfIsUsed(selectedMF?.id) ? "border-red-500" : "border-zinc-300"}`}
             >
                 <span className="flex items-center gap-2">
-                    { selectedMF && <Image src={selectedMF.img} alt={selectedMF.id} width={64} height={64} /> } {/* TODO decide size */}
+                    { selectedMF && <Image src={selectedMF.img} alt={selectedMF.id} width={48} height={48} /> }
                     { selectedMF?.id || "Select Fragment" }
                 </span>
                 <span>▼</span>
             </button>
             {
             isOpen && (
-                <div className="absolute w-100 top-full left-0 right-0 mt-1 border border-zinc-300 rounded-md bg-white z-10 max-h-64 overflow-y-auto">
+                <div className="absolute w-100 top-full left-0 right-0 mt-1 rounded-md bg-white z-10 max-h-64 overflow-y-auto border border-zinc-300">
                     {fragments
                     .filter(cmf=> optionsFilter(cmf))
                     .map((fcmf: CraftedMemoryFragment) => (
@@ -82,7 +102,7 @@ export default function MemoryFragmentSelector(
                             }}
                             className="w-100 px-3 py-2 text-left flex items-center gap-2 hover:bg-zinc-100 border-b border-zinc-200 last:border-b-0"
                         >
-                            <Image src={fcmf.img} alt={fcmf.id} width={64} height={64} />
+                            <Image src={fcmf.img} alt={fcmf.id} width={48} height={48} />
                             {fcmf.id}
                         </button>
                     ))}

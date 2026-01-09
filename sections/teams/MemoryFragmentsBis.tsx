@@ -1,7 +1,7 @@
 "use client"
 
 import { JSX, useEffect, useState } from "react";
-import { CraftedMemoryFragment, BisMemoryFragments, SetType, Rarity, MemoryFragmentsSearch, searchBisMFs, Stat, SubStat } from "../domain/memoryFragment/MemoryFragment";
+import { CraftedMemoryFragment, BisMemoryFragments, SetType, MemoryFragmentsSearch, searchBisMFs, Stat, SubStat, Piece } from "../domain/memoryFragment/MemoryFragment";
 import MemoryFragmentSearcher from "@/sections/teams/MemoryFragmentSearcher";
 import MemoryFragmentSelector from "./MemoryFragmentSelector";
 
@@ -25,13 +25,6 @@ export default function MemoryFragmentsBis(
     setMFV: (mf: CraftedMemoryFragment | undefined) => void,
     setMFVI: (mf: CraftedMemoryFragment | undefined) => void,
   }): JSX.Element {
-
-    /* TODO
-        Add LF sets ✅ (Manage 2+2+2 or 4+2 on algorithm, also manage if no selected sets, just by stats)
-        Once selected params enable search,
-        on search run algorithm,
-        return top results 
-    */
 
     const [isFilledMFI, setIsFilledMFI] = useState(false);
     const [isFilledMFII, setIsFilledMFII] = useState(false);
@@ -112,7 +105,7 @@ export default function MemoryFragmentsBis(
                 uniqueKey={`${uniqueKey}-P1`}
                 disable={false}
                 sets={sets}
-                piece={1}
+                piece={Piece.I}
                 setMF={setMFI}
                 possibleMFs={bisMFs?.I}
                 />
@@ -121,7 +114,7 @@ export default function MemoryFragmentsBis(
                 uniqueKey={`${uniqueKey}-P2`}
                 disable={false}
                 sets={sets}
-                piece={2}
+                piece={Piece.II}
                 setMF={setMFII}
                 possibleMFs={bisMFs?.II}
                 />
@@ -130,7 +123,7 @@ export default function MemoryFragmentsBis(
                 uniqueKey={`${uniqueKey}-P3`}
                 disable={false}
                 sets={sets}
-                piece={3}
+                piece={Piece.III}
                 setMF={setMFIII}
                 possibleMFs={bisMFs?.III}
                 />
@@ -139,7 +132,7 @@ export default function MemoryFragmentsBis(
                 uniqueKey={`${uniqueKey}-P4`}
                 disable={false}
                 sets={sets}
-                piece={4}
+                piece={Piece.IV}
                 setMF={setMFIV}
                 possibleMFs={bisMFs?.IV}
                 />
@@ -148,16 +141,16 @@ export default function MemoryFragmentsBis(
                 uniqueKey={`${uniqueKey}-P5`}
                 disable={false}
                 sets={sets}
-                piece={5}
+                piece={Piece.V}
                 setMF={setMFV}
                 possibleMFs={bisMFs?.V}
                 />
             <MemoryFragmentSelector
-                key={`${uniqueKey}-P5`}
-                uniqueKey={`${uniqueKey}-P5`}
+                key={`${uniqueKey}-P6`}
+                uniqueKey={`${uniqueKey}-P6`}
                 disable={false}
                 sets={sets}
-                piece={6}
+                piece={Piece.VI}
                 setMF={setMFVI}
                 possibleMFs={bisMFs?.VI}
                 />
@@ -168,42 +161,42 @@ export default function MemoryFragmentsBis(
                 key={`${uniqueKey}-P1`}
                 uniqueKey={`${uniqueKey}-P1`}
                 disable={false}
-                piece={1}
-                setFilled={setIsFilledMFI} /* TODO set main stat auto */
+                piece={Piece.I}
+                setFilled={setIsFilledMFI}
             />
             <MemoryFragmentSearcher
                 key={`${uniqueKey}-P2`}
                 uniqueKey={`${uniqueKey}-P2`}
                 disable={false}
-                piece={2}
-                setFilled={setIsFilledMFII} /* TODO set main stat auto */
+                piece={Piece.II}
+                setFilled={setIsFilledMFII}
             />
             <MemoryFragmentSearcher
                 key={`${uniqueKey}-P3`}
                 uniqueKey={`${uniqueKey}-P3`}
                 disable={false}
-                piece={3}
-                setFilled={setIsFilledMFIII} /* TODO set main stat auto */
+                piece={Piece.III}
+                setFilled={setIsFilledMFIII}
             />
             <MemoryFragmentSearcher
                 key={`${uniqueKey}-P4`}
                 uniqueKey={`${uniqueKey}-P4`}
                 disable={false}
-                piece={4}
+                piece={Piece.IV}
                 setFilled={setIsFilledMFIV}
             />
             <MemoryFragmentSearcher
                 key={`${uniqueKey}-P5`}
                 uniqueKey={`${uniqueKey}-P5`}
                 disable={false}
-                piece={5}
+                piece={Piece.V}
                 setFilled={setIsFilledMFV}
             />
             <MemoryFragmentSearcher
                 key={`${uniqueKey}-P6`}
                 uniqueKey={`${uniqueKey}-P6`}
                 disable={false}
-                piece={6}
+                piece={Piece.VI}
                 setFilled={setIsFilledMFVI}
             />
         </>

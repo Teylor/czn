@@ -24,7 +24,7 @@ export default function Home() {
         </div>
         <div className="my-8 grid grid-cols-1 gap-1 md:grid-cols-3">
           <Link key="builds-link" href="/builds" className="btn-primary">
-            Builds (WIP)
+            Builds
           </Link>
           <Link key="fragments-link" href="/fragments" className="md:col-start-3 btn-primary">
             Memory Fragments

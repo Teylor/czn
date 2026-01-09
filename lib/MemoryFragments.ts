@@ -1,4 +1,4 @@
-import { SetType } from "@/sections/domain/memoryFragment/MemoryFragment";
+import { Piece, SetType } from "@/sections/domain/memoryFragment/MemoryFragment";
 
 export const MF_SETS = [
     {
@@ -118,32 +118,32 @@ export const MF_SETS = [
 export const PIECE_TYPES = [
     {
         id: "piece_1",
-        piece: 1,
+        piece: Piece.I,
         roman: "I"
     },
     {
         id: "piece_2",
-        piece: 2,
+        piece: Piece.II,
         roman: "II"
     },
     {
         id: "piece_3",
-        piece: 3,
+        piece: Piece.III,
         roman: "III"
     },
     {
         id: "piece_4",
-        piece: 4,
+        piece: Piece.IV,
         roman: "IV"
     },
     {
         id: "piece_5",
-        piece: 5,
+        piece: Piece.V,
         roman: "V"
     },
     {
         id: "piece_6",
-        piece: 6,
+        piece: Piece.VI,
         roman: "VI"
     }
 ];

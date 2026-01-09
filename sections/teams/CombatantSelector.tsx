@@ -15,16 +15,16 @@ export default function CombatantSelector(
     setCombatant: (combatant: Combatant | undefined) => void
   }): JSX.Element {
 
-    const [combatants, setCombatants] = useState<Combatant[]>([])
+    const [combatants, setCombatants] = useState<Combatant[]>([]);
     
     useEffect(() => {
         const Combatants: Combatant[] = JSON.parse(localStorage.getItem("combatants") || "[]");
-        const mappedCombatants = Combatants.map((c: Combatant) => new Combatant(c.name, 0, 0)) /* TODO */
+        const mappedCombatants = Combatants.map((c: Combatant) => new Combatant(c.name, 0, 0));
         setCombatants(mappedCombatants);
     }, []);
 
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedCombatant, setSelectedCombatant] = useState<Combatant | undefined>(undefined)
+    const [selectedCombatant, setSelectedCombatant] = useState<Combatant | undefined>(undefined);
 
   return (
     <div className="relative md:col-span-3"> 
@@ -47,7 +47,7 @@ export default function CombatantSelector(
                         key={`${keyUnique}-${itCombatant.id}`}
                         onClick={() => {
                             setCombatant((new Combatant(itCombatant.name, 0, 0)) ?? undefined);
-                            setSelectedCombatant((new Combatant(itCombatant.name, 0, 0)) ?? undefined)
+                            setSelectedCombatant((new Combatant(itCombatant.name, 0, 0)) ?? undefined);
                             setIsOpen(false);
                         }}
                         className="w-50 px-3 py-2 text-left flex items-center gap-2 hover:bg-zinc-100 border-b border-zinc-200 last:border-b-0"

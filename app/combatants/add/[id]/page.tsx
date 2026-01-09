@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { JSX, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { COMBATANTS } from "@/lib/Combatants";
 import { Combatant } from "@/sections/domain/combatant/Combatant";
 import useCombatant from "@/hooks/useCombatant";
+import CombatantSelector from "@/sections/infrastructure/shared/CombatantSelector";
 
 export default function AddCombatant({
     params
@@ -17,7 +16,6 @@ export default function AddCombatant({
     const router = useRouter();
 
     const [id, setId] = useState<{ id: string } | undefined>();
-    const [isOpen, setIsOpen] = useState(false);
     const { combatant, setCombatant, level, setLevel, ego, setEgo } = useCombatant();
 
     function saveCombatant(combatant: Combatant) {
@@ -47,36 +45,7 @@ export default function AddCombatant({
   return (
         <>
             <div className="my-8 container">
-                <div className="relative">
-                    <button 
-                        disabled={true}
-                        onClick={() => setIsOpen(!isOpen)}
-                        className="w-50 px-3 py-2 border border-zinc-300 rounded-md bg-white text-sm text-zinc-900 text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
-                    >
-                        <span className="flex items-center gap-2">
-                            {combatant && <Image src={`/combatants/${combatant.name.toLocaleLowerCase()}.png`} alt={combatant.name} width={64} height={64} />}
-                            {combatant?.name || "Select Combatant"}
-                        </span>
-                        <span>▼</span>
-                    </button>
-                    {isOpen && (
-                        <div className="w-100 top-full left-0 right-0 mt-1 border border-zinc-300 rounded-md bg-white z-10 max-h-64 overflow-y-auto">
-                            {COMBATANTS.map((combatant) => (
-                                <button
-                                    key={combatant.id}
-                                    onClick={() => {
-                                        setCombatant(new Combatant(combatant.name, 0, 0));
-                                        setIsOpen(false);
-                                    }}
-                                    className="w-100 px-3 py-2 text-left flex items-center gap-2 hover:bg-zinc-100 border-b border-zinc-200 last:border-b-0"
-                                >
-                                    <Image src={`/combatants/${combatant.name.toLocaleLowerCase()}.png`} alt={combatant.name} width={64} height={64} />
-                                    {combatant.name}
-                                </button>
-                            ))}
-                        </div>
-                    )}
-                </div>
+                <CombatantSelector disable={true} selected={combatant} />
                 <h1 className="m-1">Level</h1>
                 <input type="number" className="m-1 w-32 px-3 py-2 border border-zinc-300 rounded-md bg-white text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-black appearance-none" 
                     min={1} max={60} value={level} 

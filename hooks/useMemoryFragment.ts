@@ -63,31 +63,26 @@ export default function useMemoryFragment() {
     useEffect(() => {
         if (!selectedFragment || !selectedMainStat) return;
         selectedFragment.mainStat = { [selectedMainStat]: mainStat } as Partial<Record<Stat, number>>;
-        console.log(selectedFragment)
     }, [mainStat, selectedMainStat, selectedFragment]);
 
     useEffect(() => {
         if (!selectedFragment || !selectedSubStat1) return;
         selectedFragment.subStats[0] = { [selectedSubStat1]: subStat1 } as Partial<Record<SubStat, number>>;
-        console.log(selectedFragment)
     }, [subStat1, selectedSubStat1, selectedFragment]);
 
     useEffect(() => {
         if (!selectedFragment || !selectedSubStat2) return;
         selectedFragment.subStats[1] = { [selectedSubStat2]: subStat2 } as Partial<Record<SubStat, number>>;
-        console.log(selectedFragment)
     }, [subStat2, selectedSubStat2, selectedFragment]);
 
     useEffect(() => {
         if (!selectedFragment || !selectedSubStat3) return;
         selectedFragment.subStats[2] = { [selectedSubStat3]: subStat3 } as Partial<Record<SubStat, number>>;
-        console.log(selectedFragment)
     }, [subStat3, selectedSubStat3, selectedFragment]);
 
     useEffect(() => {
         if (!selectedFragment || !selectedSubStat4) return;
         selectedFragment.subStats[3] = { [selectedSubStat4]: subStat4 } as Partial<Record<SubStat, number>>;
-        console.log(selectedFragment)
     }, [subStat4, selectedSubStat4, selectedFragment]);
 
   return { selectedFragment, setSelectedFragment, 
