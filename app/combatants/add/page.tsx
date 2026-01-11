@@ -5,7 +5,7 @@ import { JSX } from "react";
 import { useRouter } from "next/navigation";
 import { Combatant } from "@/sections/domain/combatant/Combatant";
 import useCombatant from "@/hooks/useCombatant";
-import CombatantSelector from "@/sections/infrastructure/shared/CombatantSelector";
+import CombatantSelector from "@/sections/shared/CombatantSelector";
 
 export default function AddCombatant(): JSX.Element {
     const router = useRouter();

@@ -26,48 +26,26 @@ export const FORBIDDEN_CARDS = [
     },
 ]
 
-export const WEAPON_ITEMS = [
+export const COMMON_EPIPHANIES = [
     {
-        id: "sword_1",
-        name: "Bronze Sword",
-        img: "",
-        effect: "Increases Attack by 5%",
-        atk: 5,
-    }
-]
-export const ARMOR_ITEMS = [
-    {
-        id: "sword_1",
-        name: "Bronze Sword",
-        img: "",
-        effect: "Increases Attack by 5%",
-        def: 5,
-    }
-]
-export const RING_ITEMS = [
-    {
-        id: "sword_1",
-        name: "Bronze Sword",
-        img: "",
-        effect: "Increases Attack by 5%",
-        hp: 5,
-    }
-]
-
-export const COMMON_EPIPHANIES = []
-export const DIVINE_EPIPHANIES: DivineEpiphany[] = [
-    {
-        id: "legendary_epi_1",
-        name: "AP",
-        effect: "1 AP",
-    },
-    {
-        id: "legendary_epi_2",
+        id: "common_epi_1",
         name: "Draw",
         effect: "Draw 1 card",
     },
     {
-        id: "legendary_epi_3",
+        id: "common_epi_2",
+        name: "Agony",
+        effect: "Apply 2 Agony at the start of turn",
+    },
+]
+export const DIVINE_EPIPHANIES: DivineEpiphany[] = [
+    {
+        id: "divine_epi_1",
+        name: "AP",
+        effect: "1 AP",
+    },
+    {
+        id: "divine_epi_2",
         name: "Reduce",
         effect: "Reduce cost by 1",
     }
@@ -80,8 +58,11 @@ export interface BasicSetCard {
     name: string;
     effect: string;
     cost: number;
-    type: "Attack" | "Skill" | "Upgrade";
+    type: CardType;
+    tags?: CardTag[];
     epiphany?: string;
+    enableCommon?: boolean;
+    common?: string;
     divine?: string;
 }
 
@@ -91,6 +72,19 @@ export interface DivineEpiphany {
     effect: string;
 }
 
+export enum CardType {
+    ATTACK = "Attack",
+    SKILL = "Skill",
+    UPGRADE = "Upgrade",
+}
+
+export enum CardTag {
+    RETAIN = "Retain",
+    EXHAUST = "Exhaust",
+    EXHAUST_2 = "Exhaust 2",
+    UNIQUE = "Unique",
+}
+
 export interface Epiphany {
     id: string;
     cardId: string;
@@ -98,7 +92,8 @@ export interface Epiphany {
     name: string;
     effect: string;
     cost: number;
-    type: "Attack" | "Skill" | "Upgrade";
+    type: CardType;
+    tags?: CardTag[];
 }
 
 const BERYL_BASIC_SET: BasicSetCard[] = [
@@ -109,7 +104,7 @@ const BERYL_BASIC_SET: BasicSetCard[] = [
         name: "Launcher",
         effect: "100% Damage",
         cost: 1,
-        type: "Attack",
+        type: CardType.ATTACK,
     },
     {
         id: "beryl_card_2",
@@ -118,7 +113,7 @@ const BERYL_BASIC_SET: BasicSetCard[] = [
         name: "Charge Launcher",
         effect: "220% Damage",
         cost: 2,
-        type: "Attack",
+        type: CardType.ATTACK,
     },
     {
         id: "beryl_card_3",
@@ -127,25 +122,29 @@ const BERYL_BASIC_SET: BasicSetCard[] = [
         name: "Barrier",
         effect: "100% Shield",
         cost: 1,
-        type: "Skill",
+        type: CardType.SKILL,
     },
     {
         id: "beryl_card_4",
         combatantId: "beryl",
         img: "/cards/combatants/beryl/opening_found.png",
         name: "Opening Found",
-        effect: "180% Damage Retain: +1 hit(s) for 1 turn",
+        effect: "120% Damage Retain: +1 hit(s) for 1 turn",
+        enableCommon: true,
         cost: 1,
-        type: "Attack",
+        type: CardType.ATTACK,
+        tags: [CardTag.RETAIN],
     },
     {
         id: "beryl_card_5",
         combatantId: "beryl",
         img: "/cards/combatants/beryl/charged_shot.png",
         name: "Charged Shot",
-        effect: "300% Damage Retain: Damage +120%",
+        effect: "200% Damage Retain: Damage +80%",
+        enableCommon: true,
         cost: 2,
-        type: "Attack",
+        type: CardType.ATTACK,
+        tags: [CardTag.RETAIN],
     },
     {
         id: "beryl_card_6",
@@ -153,17 +152,20 @@ const BERYL_BASIC_SET: BasicSetCard[] = [
         img: "/cards/combatants/beryl/guilty_pleasure.png",
         name: "Guilty Pleasure",
         effect: "Draw 3",
+        enableCommon: true,
         cost: 0,
-        type: "Skill",
+        type: CardType.SKILL,
+        tags: [CardTag.EXHAUST],
     },
     {
         id: "beryl_card_7",
         combatantId: "beryl",
         img: "/cards/combatants/beryl/unlimited_firepower.png",
         name: "Unlimited Firepower",
-        effect: "+120% Damage of next Attack Card used",
+        effect: "+100 Shield +80% Damage of next Attack Card used",
+        enableCommon: true,
         cost: 1,
-        type: "Skill",
+        type: CardType.SKILL,
     },
         {
         id: "beryl_card_8",
@@ -172,7 +174,7 @@ const BERYL_BASIC_SET: BasicSetCard[] = [
         name: "Heavy Weapons Specialist",
         effect: "Create 1 Opening Found or Charged Shot card, grant it Exhaust, cost -1 until used",
         cost: 1,
-        type: "Skill",
+        type: CardType.SKILL,
     },
 ]
 
@@ -183,50 +185,240 @@ const BERYL_EPIPHANIES: Record<string, Epiphany[]> = {
             cardId: "beryl_card_4",
             cardName: "Opening Found",
             name: "Epiphany 0",
-            effect: "180% Damage Retain: +1 hit(s) for 1 turn",
+            effect: "120% Damage Retain: +1 hit(s) for 1 turn",
             cost: 1,
-            type: "Attack",
+            type: CardType.ATTACK,
+            tags: [CardTag.RETAIN],
         },
         {
             id: "beryl_card_4_epi_1",
             cardId: "beryl_card_4",
             cardName: "Opening Found",
             name: "Epiphany 1",
-            effect: "225% Damage Retain: Change cost to 0",
+            effect: "180% Damage Retain: +1 hit(s) for 1 turn",
             cost: 1,
-            type: "Attack",
+            type: CardType.ATTACK,
+            tags: [CardTag.RETAIN],
         },
         {
             id: "beryl_card_4_epi_2",
             cardId: "beryl_card_4",
             cardName: "Opening Found",
             name: "Epiphany 2",
-            effect: "100% Damage Retain: +2 hit(s) for 1 turn",
+            effect: "225% Damage Retain: Change cost to 0",
             cost: 1,
-            type: "Attack",
+            type: CardType.ATTACK,
+            tags: [CardTag.RETAIN],
         },
         {
             id: "beryl_card_4_epi_3",
             cardId: "beryl_card_4",
             cardName: "Opening Found",
             name: "Epiphany 3",
-            effect: "150% Damage Retain: +60% Damage",
+            effect: "100% Damage Retain: +2 hit(s) for 1 turn",
             cost: 1,
-            type: "Attack",
+            type: CardType.ATTACK,
+            tags: [CardTag.RETAIN],
         },
         {
             id: "beryl_card_4_epi_4",
             cardId: "beryl_card_4",
             cardName: "Opening Found",
             name: "Epiphany 4",
+            effect: "150% Damage Retain: +60% Damage",
+            cost: 1,
+            type: CardType.ATTACK,
+            tags: [CardTag.RETAIN],
+        },
+        {
+            id: "beryl_card_4_epi_5",
+            cardId: "beryl_card_4",
+            cardName: "Opening Found",
+            name: "Epiphany 5",
             effect: "When own card is Retained, +150% Extra Attack to random enemies",
             cost: 1,
-            type: "Upgrade",
+            type: CardType.UPGRADE,
         }
     ],
-    beryl_card_5: [],
-    beryl_card_6: [],
-    beryl_card_7: []
+    beryl_card_5: [
+        {
+            id: "beryl_card_5_epi_0",
+            cardId: "beryl_card_5",
+            cardName: "Charged Shot",
+            name: "Epiphany 0",
+            effect: "200% Damage Retain: Damage +80%",
+            cost: 2,
+            type: CardType.ATTACK,
+            tags: [CardTag.RETAIN],
+        },
+        {
+            id: "beryl_card_5_epi_1",
+            cardId: "beryl_card_5",
+            cardName: "Charged Shot",
+            name: "Epiphany 1",
+            effect: "300% Damage Retain: Damage +120%",
+            cost: 2,
+            type: CardType.ATTACK,
+            tags: [CardTag.RETAIN],
+        },
+        {
+            id: "beryl_card_5_epi_2",
+            cardId: "beryl_card_5",
+            cardName: "Charged Shot",
+            name: "Epiphany 2",
+            effect: "2000% Damage Combo: +100% Damage amount",
+            cost: 1,
+            type: CardType.ATTACK,
+            tags: [CardTag.RETAIN],
+        },
+        {
+            id: "beryl_card_5_epi_3",
+            cardId: "beryl_card_5",
+            cardName: "Charged Shot",
+            name: "Epiphany 3",
+            effect: "450% Damage Retain: Reduce cost by 1 until used",
+            cost: 3,
+            type: CardType.ATTACK,
+            tags: [CardTag.RETAIN],
+        },
+        {
+            id: "beryl_card_5_epi_4",
+            cardId: "beryl_card_5",
+            cardName: "Charged Shot",
+            name: "Epiphany 4",
+            effect: "300% Damage Retain: +160% Damage (Max 1 time)",
+            cost: 2,
+            type: CardType.ATTACK,
+            tags: [CardTag.RETAIN],
+        },
+        {
+            id: "beryl_card_5_epi_5",
+            cardId: "beryl_card_5",
+            cardName: "Charged Shot",
+            name: "Epiphany 5",
+            effect: "125% Damage x2 Retain: Damage +50% Damage",
+            cost: 2,
+            type: CardType.ATTACK,
+            tags: [CardTag.RETAIN],
+        }
+    ],
+    beryl_card_6: [
+        {
+            id: "beryl_card_6_epi_0",
+            cardId: "beryl_card_6",
+            cardName: "Guilty Pleasure",
+            name: "Epiphany 0",
+            effect: "Draw 3",
+            cost: 0,
+            type: CardType.SKILL,
+            tags: [CardTag.EXHAUST],
+        },
+        {
+            id: "beryl_card_6_epi_1",
+            cardId: "beryl_card_6",
+            cardName: "Guilty Pleasure",
+            name: "Epiphany 1",
+            effect: "Draw 3 1 Morale",
+            cost: 0,
+            type: CardType.SKILL,
+            tags: [CardTag.EXHAUST],
+        },
+        {
+            id: "beryl_card_6_epi_2",
+            cardId: "beryl_card_6",
+            cardName: "Guilty Pleasure",
+            name: "Epiphany 2",
+            effect: "Draw 3 -1 Cost of 1 random card in hand",
+            cost: 0,
+            type: CardType.SKILL,
+            tags: [CardTag.EXHAUST],
+        },
+        {
+            id: "beryl_card_6_epi_3",
+            cardId: "beryl_card_6",
+            cardName: "Guilty Pleasure",
+            name: "Epiphany 3",
+            effect: "Draw 3 At the start of the next turn, Draw 2",
+            cost: 0,
+            type: CardType.SKILL,
+            tags: [CardTag.EXHAUST],
+        },
+        {
+            id: "beryl_card_6_epi_4",
+            cardId: "beryl_card_6",
+            cardName: "Guilty Pleasure",
+            name: "Epiphany 4",
+            effect: "Draw 1 Activate Retain effect on all cards in hand",
+            cost: 0,
+            type: CardType.SKILL,
+        },
+        {
+            id: "beryl_card_6_epi_5",
+            cardId: "beryl_card_6",
+            cardName: "Guilty Pleasure",
+            name: "Epiphany 5",
+            effect: "Draw 1 Activate Retain effect on all cards in hand",
+            cost: 0,
+            type: CardType.SKILL,
+            tags: [CardTag.EXHAUST_2, CardTag.UNIQUE],
+        }
+    ],
+    beryl_card_7: [
+        {
+            id: "beryl_card_7_epi_0",
+            cardId: "beryl_card_7",
+            cardName: "Unlimited Firepower",
+            name: "Epiphany 0",
+            effect: "+100 Shield +80% Damage of next Attack Card used",
+            cost: 1,
+            type: CardType.SKILL,
+        },
+        {
+            id: "beryl_card_7_epi_1",
+            cardId: "beryl_card_7",
+            cardName: "Unlimited Firepower",
+            name: "Epiphany 1",
+            effect: "+150 Shield +120% Damage of next Attack Card used",
+            cost: 1,
+            type: CardType.SKILL,
+        },
+        {
+            id: "beryl_card_7_epi_2",
+            cardId: "beryl_card_7",
+            cardName: "Unlimited Firepower",
+            name: "Epiphany 2",
+            effect: "For 1 turn, +80% Attack Card Damage",
+            cost: 1,
+            type: CardType.SKILL,
+        },
+        {
+            id: "beryl_card_7_epi_3",
+            cardId: "beryl_card_7",
+            cardName: "Unlimited Firepower",
+            name: "Epiphany 3",
+            effect: "+160% Damage of next Own Card used",
+            cost: 1,
+            type: CardType.SKILL,
+        },
+        {
+            id: "beryl_card_7_epi_4",
+            cardId: "beryl_card_7",
+            cardName: "Unlimited Firepower",
+            name: "Epiphany 4",
+            effect: "+150 Shield +80% Damage of the next Attack Card",
+            cost: 1,
+            type: CardType.SKILL,
+        },
+        {
+            id: "beryl_card_7_epi_5",
+            cardId: "beryl_card_7",
+            cardName: "Unlimited Firepower",
+            name: "Epiphany 5",
+            effect: "Increase Damage Amount of Attack Cards of this unit by 30%",
+            cost: 1,
+            type: CardType.UPGRADE,
+        }
+    ]
 }
 
 export const BASIC_SETS: Record<string, BasicSetCard[]> = {

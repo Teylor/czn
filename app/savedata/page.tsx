@@ -1,0 +1,63 @@
+"use client"
+
+import { JSX, useEffect, useState } from "react";
+import Link from 'next/link'
+import Image from 'next/image'
+import { IoMdAdd } from "react-icons/io";
+
+export default function SaveData({}: {}): JSX.Element {
+    const [saveData, setSaveData] = useState<any[]>([]);
+      
+    useEffect(() => {
+      const SaveData = JSON.parse(localStorage.getItem("savedata") || "[]");
+      setSaveData(SaveData);
+    }, []);
+
+    function handleDelete(id: string) {
+      const next = saveData.filter((c) => c.id !== id);
+      setSaveData(next);
+      localStorage.setItem("savedata", JSON.stringify(next));
+    }
+
+  return (
+        <>
+        <div className="my-8 container m-1">
+          <Link href="/savedata/add" className="m-1 btn-primary">
+            <IoMdAdd className="mr-2" />
+            Add Save Data
+          </Link>
+          <div className="grid grid-cols-1 gap-1 sm:grid-cols-3 md:grid-cols-5">
+            {
+              saveData.map((sd) => (
+                <div key={sd?.id} className="relative border border-zinc-300 rounded-md p-4 flex flex-col items-center">
+                  <button
+                      aria-label="Delete save data"
+                      onClick={() => handleDelete(sd.id as unknown as string)}
+                      className="absolute top-1 right-1 w-6 h-6 flex items-center justify-center text-xs font-bold text-white bg-red-600 rounded-full hover:bg-red-700"
+                    >
+                      X
+                  </button>
+
+                  <Link
+                    href={`/savedata/add/${sd?.id}`}
+                    key={sd?.id} className="w-full h-full flex flex-col items-center">
+                      <h2 className="mb-2">{sd?.name}</h2>
+                      <Image src={sd?.img} alt={sd?.name} width={64} height={64} />
+                      <div className="grid grid-cols-3 gap-1">
+                        { sd?.equipment?.weapon?.img ? <Image src={sd?.equipment?.weapon?.img} alt={sd?.name} width={32} height={32} /> : "X" } {/* TODO replace X for empty image */}
+                        { sd?.equipment?.armor?.img ? <Image src={sd?.equipment?.armor?.img} alt={sd?.name} width={32} height={32} /> : "X" }
+                        { sd?.equipment?.ring?.img ? <Image src={sd?.equipment?.ring?.img} alt={sd?.name} width={32} height={32} /> : "X" }
+                      </div>
+                  </Link>
+
+                </div>
+              ))
+            }
+          </div>
+        </div>
+        <Link href="/" className="btn-primary m-1">
+          Home
+        </Link>
+        </>
+    );
+}
