@@ -1,55 +1,19 @@
 import { CombatantType } from "@/sections/domain/combatant/Combatant"
 
-export const COMMON_CARDS = [
-    {
-        id: "quickstr_set",
-        img: "/TODO.png",
-        name: "Quick Strike",
-        effect: "Deal 50% Damage Amount to a single enemy",
-        combatantTypes: [CombatantType.STRIKER, CombatantType.RANGER],
-    },
-]
-export const MONSTER_CARDS = [
-    {
-        id: "quickstr_set",
-        img: "/TODO.png",
-        name: "Quick Strike",
-        effect: "Deal 50% Damage Amount to a single enemy"
-    },
-]
-export const FORBIDDEN_CARDS = [
-    {
-        id: "quickstr_set",
-        img: "/TODO.png",
-        name: "Quick Strike",
-        effect: "Deal 50% Damage Amount to a single enemy"
-    },
-]
 
-export const COMMON_EPIPHANIES = [
-    {
-        id: "common_epi_1",
-        name: "Draw",
-        effect: "Draw 1 card",
-    },
-    {
-        id: "common_epi_2",
-        name: "Agony",
-        effect: "Apply 2 Agony at the start of turn",
-    },
-]
-export const DIVINE_EPIPHANIES: DivineEpiphany[] = [
-    {
-        id: "divine_epi_1",
-        name: "AP",
-        effect: "1 AP",
-    },
-    {
-        id: "divine_epi_2",
-        name: "Reduce",
-        effect: "Reduce cost by 1",
-    }
-]
+export interface CommonSetCard {
+    id: string;
+    img: string;
+    name: string;
+    effect: string;
+    cost: number;
+    type: CardType;
+    combatantTypes: CombatantType[];
+    tags?: CardTag[];
+    enableCommon?: boolean;
+    common?: string;
+    divine?: string;
+}
 
 export interface BasicSetCard {
     id: string;
@@ -95,6 +59,65 @@ export interface Epiphany {
     type: CardType;
     tags?: CardTag[];
 }
+
+export const COMMON_CARDS: CommonSetCard[] = [
+    {
+        id: "common_card1",
+        img: "/cards/common/abyssalization.png",
+        name: "Abyssalization",
+        effect: "10% HP Reduction +30% Damage to next Attack Card used Cannot be used if HP is 10% or less",
+        combatantTypes: [],
+        cost: 1,
+        type: CardType.SKILL,
+    },
+    {
+        id: "common_card2",
+        img: "/cards/common/acid_gas.png",
+        name: "Acid Gas",
+        effect: "2 Impair to all enemies",
+        combatantTypes: [CombatantType.RANGER, CombatantType.HUNTER],
+        cost: 1,
+        type: CardType.SKILL,
+    }
+]
+
+export const MONSTER_CARDS: CommonSetCard[] = [
+    {
+        id: "monster_card1",
+        img: "/cards/monster/abyssal_bug.png",
+        name: "Abyssal Bug",
+        effect: "-1 Morale -3 Resolve",
+        cost: 0,
+        type: CardType.SKILL,
+        combatantTypes: [],
+    },
+]
+
+export const COMMON_EPIPHANIES = [
+    {
+        id: "common_epi_1",
+        name: "Draw",
+        effect: "Draw 1 card",
+    },
+    {
+        id: "common_epi_2",
+        name: "Agony",
+        effect: "Apply 2 Agony at the start of turn",
+    },
+]
+
+export const DIVINE_EPIPHANIES: DivineEpiphany[] = [
+    {
+        id: "divine_epi_1",
+        name: "AP",
+        effect: "1 AP",
+    },
+    {
+        id: "divine_epi_2",
+        name: "Reduce",
+        effect: "Reduce cost by 1",
+    }
+]
 
 const BERYL_BASIC_SET: BasicSetCard[] = [
     {

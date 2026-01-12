@@ -6,10 +6,12 @@ import Link from 'next/link'
 import Image from 'next/image'
 import CombatantSelector from "@/sections/shared/CombatantSelector";
 import { Combatant } from "@/sections/domain/combatant/Combatant";
-import { BASIC_SETS, BasicSetCard, Epiphany, COMBATANTS_EPIPHANIES, DIVINE_EPIPHANIES, COMMON_EPIPHANIES, CardType } from "@/lib/Builds";
+import { BASIC_SETS, BasicSetCard, Epiphany, 
+  COMBATANTS_EPIPHANIES, DIVINE_EPIPHANIES, 
+  COMMON_EPIPHANIES, CardType,
+  COMMON_CARDS, MONSTER_CARDS } from "@/lib/Builds";
 import EquipmentSelector from "@/sections/shared/EquipmentSelector";
 import { Equipment, EquipmentType } from "@/sections/domain/equipment/Equipment";
-import { IoMdAdd } from "react-icons/io";
 
 export default function AddSaveData(
   {}: {}): JSX.Element {
@@ -29,6 +31,9 @@ export default function AddSaveData(
     const [commonIsOpen, setCommonIsOpen] = useState<boolean>(false);
     const [commonEpiphanies, setCommonEpiphanies] = useState<any[]>([]);
     const [selectedCommonCardId, setSelectedCommonCardId] = useState<string | null>(null);
+    
+    const [addCardIsOpen, setAddCardIsOpen] = useState<boolean>(false);
+    const [cardsToAdd, setCardsToAdd] = useState<any[]>([]);
 
     const [weaponEquipment, setWeaponEquipment] = useState<Equipment | undefined>(undefined);
     const [armorEquipment, setArmorEquipment] = useState<Equipment | undefined>(undefined);
@@ -53,7 +58,8 @@ export default function AddSaveData(
         const SaveData = JSON.parse(localStorage.getItem("savedata") || "[]");
         SaveData.push({
             id: `${combatant?.name}-${saveDataName}-${Date.now()}`, 
-            name: saveDataName, img: `${combatant?.img}`, 
+            name: saveDataName, img: `${combatant?.img}`,
+            saveData: basicSet,
             equipment: {
                 weapon: weaponEquipment,
                 armor: armorEquipment,
@@ -115,6 +121,20 @@ export default function AddSaveData(
       setCommonEpiphanies(COMMON_EPIPHANIES || []);
       setSelectedCommonCardId(id);
       setCommonIsOpen(true);
+    }
+    
+    function handleSelectCardToAdd() {
+      setCardsToAdd(MONSTER_CARDS.concat(COMMON_CARDS) || []);
+      setAddCardIsOpen(true);
+    }
+
+    function handleCardToAdd(cardId: string | null) {
+      const index: number = cardsToAdd.findIndex((c) => c.id == cardId);
+      if (index != -1) {
+        basicSet.push(cardsToAdd[index]);
+        setBasicSet([...basicSet]);
+      }
+      setAddCardIsOpen(false);
     }
 
     function handleSelectDivine(cardId: string | null, divineId: string) {
@@ -243,34 +263,34 @@ export default function AddSaveData(
                     </div>
             </div>
           )}
-          {/* TODO add card */}
-          {/* {divineIsOpen && (
+          {addCardIsOpen && (
             <div className="fixed inset-0 z-50 flex items-center justify-center">
               <div
                 className="absolute inset-0 bg-black/50"
-                onClick={() => { setDivineIsOpen(false); setSelectedDivineCardId(null); }}
+                onClick={() => { setAddCardIsOpen(false); }}
               />
                     <div className="relative z-10 bg-white p-6 rounded-md max-w-2xl w-full mx-4 sm:mx-6">
-                      <h3 className="text-xl font-bold mb-3">Select Divine Epiphany</h3>
+                      <h3 className="text-xl font-bold mb-3">Select Card to Add</h3>
+                      {/* Add a searcher */}
                       <div className="space-y-3 max-h-96 overflow-auto">
-                        {divineEpiphanies.length === 0 && <div className="text-sm text-gray-500">No divine epiphanies available</div>}
-                        {divineEpiphanies.map((d) => (
-                          <div key={`${selectedDivineCardId}-${d.id}`}>
+                        {cardsToAdd.map((card) => (
+                          <div key={`common-cards-${card.id}`}>
+                            <Image src={card.img} alt={card.name} width={32} height={32} className="inline-block mr-2" />
                             <button
                               className="w-full text-left p-3 border rounded hover:bg-gray-100"
-                              onClick={() => handleSelectDivine(selectedDivineCardId, d.id)}
+                              onClick={() => handleCardToAdd(card.id)}
                             >
-                              {d.name} — {d.effect}
+                              {card.name} — {card.effect}
                             </button>
                           </div>
                         ))}
                       </div>
                       <div className="mt-3 text-right">
-                        <button className="btn-primary" onClick={() => { setDivineIsOpen(false); setSelectedDivineCardId(null); }}>Close</button>
+                        <button className="btn-primary" onClick={() => { setAddCardIsOpen(false); }}>Close</button>
                       </div>
                     </div>
             </div>
-          )} */}
+          )}
           {
             combatant && basicSet.length > 0 && (
               <div className="my-8 container">
@@ -312,7 +332,7 @@ export default function AddSaveData(
                             X
                         </button>
                         <button
-                          hidden={card.id.includes("1") || card.id.includes("2") || card.id.includes("3")}
+                          hidden={card.id.includes("_1") || card.id.includes("_2") || card.id.includes("_3")}
                           aria-label="Copy card"
                           onClick={() => handleCopyCard(card.id as unknown as string)}
                           className="absolute z-5 top-1 right-8 w-6 h-6 flex items-center justify-center text-xs font-bold text-white bg-green-600 rounded-full hover:bg-green-700"
@@ -320,7 +340,7 @@ export default function AddSaveData(
                             C
                         </button>
                         <button
-                          hidden={card.id.includes("1") || card.id.includes("2") || card.id.includes("3") || card.id.includes("8")}
+                          hidden={card.id.includes("_1") || card.id.includes("_2") || card.id.includes("_3") || card.id.includes("_8")}
                           aria-label="Epiphany card"
                           onClick={() => handleEpiphanyCard(card.id as unknown as string)}
                           className="absolute z-5 top-8 right-1 w-6 h-6 flex items-center justify-center text-xs font-bold text-white bg-blue-600 rounded-full hover:bg-blue-700"
@@ -328,7 +348,7 @@ export default function AddSaveData(
                             E
                         </button>
                         <button
-                          hidden={card.id.includes("1") || card.id.includes("2") || card.id.includes("3") || card.id.includes("8")}
+                          hidden={card.id.includes("_1") || card.id.includes("_2") || card.id.includes("_3") || card.id.includes("_8")}
                           aria-label="Divine Epiphany"
                           onClick={() => handleDivineEpiphany(card.id as unknown as string)}
                           className="absolute z-5 top-16 right-1 w-6 h-6 flex items-center justify-center text-xs font-bold text-white bg-yellow-600 rounded-full hover:bg-yellow-700"
@@ -355,9 +375,11 @@ export default function AddSaveData(
                       </div>
                     ))
                   }
-                  <div className="relative h-full w-full border border-zinc-300 rounded-md p-4 flex flex-col items-center">
+                  <div 
+                   onClick={() => handleSelectCardToAdd()}
+                   className="relative w-3em border border-zinc-300 rounded-md p-4 flex flex-col items-center">
                     <button>
-                      + Add Card (TODO)
+                      + Add Card
                     </button>
                   </div>
                 </div>
