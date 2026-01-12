@@ -340,10 +340,10 @@ export default function AddSaveData(
                             C
                         </button>
                         <button
-                          hidden={card.id.includes("_1") || card.id.includes("_2") || card.id.includes("_3") || card.id.includes("_8")}
+                          hidden={card.id.includes("_1") || card.id.includes("_2") || card.id.includes("_3") || card.id.includes("_8") || card.id.includes("common") || card.id.includes("monster")}
                           aria-label="Epiphany card"
                           onClick={() => handleEpiphanyCard(card.id as unknown as string)}
-                          className="absolute z-5 top-8 right-1 w-6 h-6 flex items-center justify-center text-xs font-bold text-white bg-blue-600 rounded-full hover:bg-blue-700"
+                          className="absolute z-5 top-8 right-8 w-6 h-6 flex items-center justify-center text-xs font-bold text-white bg-blue-600 rounded-full hover:bg-blue-700"
                           >
                             E
                         </button>
@@ -359,7 +359,7 @@ export default function AddSaveData(
                           hidden={!(card.enableCommon)}
                           aria-label="Epiphany card"
                           onClick={() => handleCommonEpiphany(card.id as unknown as string)}
-                          className="absolute z-5 top-8 right-8 w-6 h-6 flex items-center justify-center text-xs font-bold text-white bg-gray-600 rounded-full hover:bg-gray-700"
+                          className="absolute z-5 top-8 right-1 w-6 h-6 flex items-center justify-center text-xs font-bold text-white bg-gray-600 rounded-full hover:bg-gray-700"
                           >
                             CE
                         </button>

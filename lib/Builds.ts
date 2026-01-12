@@ -69,6 +69,7 @@ export const COMMON_CARDS: CommonSetCard[] = [
         combatantTypes: [],
         cost: 1,
         type: CardType.SKILL,
+        enableCommon: true,
     },
     {
         id: "common_card2",
@@ -78,6 +79,7 @@ export const COMMON_CARDS: CommonSetCard[] = [
         combatantTypes: [CombatantType.RANGER, CombatantType.HUNTER],
         cost: 1,
         type: CardType.SKILL,
+        enableCommon: true,
     }
 ]
 
@@ -90,6 +92,7 @@ export const MONSTER_CARDS: CommonSetCard[] = [
         cost: 0,
         type: CardType.SKILL,
         combatantTypes: [],
+        enableCommon: true,
     },
 ]
 
