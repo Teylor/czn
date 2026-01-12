@@ -131,7 +131,9 @@ export default function AddSaveData(
     function handleCardToAdd(cardId: string | null) {
       const index: number = cardsToAdd.findIndex((c) => c.id == cardId);
       if (index != -1) {
-        basicSet.push(cardsToAdd[index]);
+        let cardToAdd = Object.assign({}, cardsToAdd[index]);
+        cardToAdd.id = `${cardToAdd.id}-${basicSet.length + 1}`;
+        basicSet.push(cardToAdd);
         setBasicSet([...basicSet]);
       }
       setAddCardIsOpen(false);
@@ -322,7 +324,7 @@ export default function AddSaveData(
                   {
                     basicSet.map((card) => (
                       <div 
-                        key={card.id}
+                        key={`bs-${card.id}`}
                         className="relative border border-zinc-300 rounded-md p-4 flex flex-col items-center">
                         <button
                           aria-label="Delete card"
