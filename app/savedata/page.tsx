@@ -19,6 +19,17 @@ export default function SaveData({}: {}): JSX.Element {
       localStorage.setItem("savedata", JSON.stringify(next));
     }
 
+    function handleToggleOwned(id: string) {
+      const next = saveData.map((sd) => {
+        if (sd.id === id) {
+          return { ...sd, owned: !sd.owned };
+        }
+        return sd;
+      });
+      setSaveData(next);
+      localStorage.setItem("savedata", JSON.stringify(next));
+    }
+
   return (
         <>
         <div className="my-8 container m-1">
@@ -36,6 +47,19 @@ export default function SaveData({}: {}): JSX.Element {
                       className="absolute top-1 right-1 w-6 h-6 flex items-center justify-center text-xs font-bold text-white bg-red-600 rounded-full hover:bg-red-700"
                     >
                       X
+                  </button>
+
+                  <button
+                    onClick={() => handleToggleOwned(sd.id)}
+                    className="absolute top-1 left-1 inline-flex items-center h-6 rounded-full w-20 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    style={{ backgroundColor: sd.owned ? '#22c55e' : '#3b82f6' }}
+                  >
+                    <span
+                      className="inline-block h-5 w-9 transform rounded-full bg-white transition-transform text-xs font-bold flex items-center justify-center"
+                      style={{ transform: sd.owned ? 'translateX(44px)' : 'translateX(1px)' }}
+                    >
+                      {sd.owned ? 'Owned' : 'LF'}
+                    </span>
                   </button>
 
                   <Link
