@@ -59,6 +59,7 @@ export default function AddSaveData(
         SaveData.push({
             id: `${combatant?.name}-${saveDataName}-${Date.now()}`, 
             name: saveDataName, img: `${combatant?.img}`,
+            owned: false,
             saveData: basicSet,
             equipment: {
                 weapon: weaponEquipment,

@@ -1,0 +1,95 @@
+import { test, expect } from '@playwright/test';
+
+test.describe('Application Navigation', () => {
+  test('should navigate through all main pages without errors', async ({ page }) => {
+    const routes = [
+      '/',
+      '/combatants',
+      '/combatants/add',
+      '/partners',
+      '/partners/add',
+      '/fragments',
+      '/fragments/add',
+      '/builds',
+      '/builds/add',
+      '/savedata',
+      '/savedata/add',
+      '/teams',
+      '/teams/add',
+    ];
+
+    for (const route of routes) {
+      await page.goto(route);
+      await expect(page).toHaveURL(route);
+    }
+  });
+
+  test('should maintain consistent Home link across all list pages', async ({ page }) => {
+    const pagesWithHome = [
+      '/combatants',
+      '/partners',
+      '/fragments',
+      '/builds',
+      '/savedata',
+      '/teams'
+    ];
+
+    for (const route of pagesWithHome) {
+      await page.goto(route);
+      await page.click('a:has-text("Home")');
+      await expect(page).toHaveURL('/');
+    }
+  });
+
+  test('should navigate from home to each section and back', async ({ page }) => {
+    const sections = [
+      { link: '/combatants', name: 'Combatants' },
+      { link: '/partners', name: 'Partners' },
+      { link: '/savedata', name: 'Save Datas' },
+      { link: '/fragments', name: 'Memory Fragments' },
+      { link: '/builds', name: 'Builds' },
+      { link: '/teams', name: 'Teams' },
+    ];
+
+    for (const section of sections) {
+      await page.goto('/');
+      await page.click(`a[href="${section.link}"]`);
+      await expect(page).toHaveURL(section.link);
+      await page.click('a:has-text("Home")');
+      await expect(page).toHaveURL('/');
+    }
+  });
+
+  test('should navigate to add pages from list pages', async ({ page }) => {
+    const listPages = [
+      { list: '/combatants', add: '/combatants/add', button: 'Add Combatant' },
+      { list: '/partners', add: '/partners/add', button: 'Add Partner' },
+      { list: '/fragments', add: '/fragments/add', button: 'Add Memory Fragments' },
+      { list: '/builds', add: '/builds/add', button: 'Add Build' },
+      { list: '/savedata', add: '/savedata/add', button: 'Add Save Data' },
+      { list: '/teams', add: '/teams/add', button: 'Add Team' },
+    ];
+
+    for (const { list, add, button } of listPages) {
+      await page.goto(list);
+      await page.click(`a:has-text("${button}")`);
+      await expect(page).toHaveURL(add);
+    }
+  });
+
+  test('should return to list pages from add pages via Cancel', async ({ page }) => {
+    const addPages = [
+      { add: '/combatants/add', list: '/combatants' },
+      { add: '/partners/add', list: '/partners' },
+      { add: '/fragments/add', list: '/fragments' },
+      { add: '/savedata/add', list: '/savedata' },
+      { add: '/teams/add', list: '/teams' },
+    ];
+
+    for (const { add, list } of addPages) {
+      await page.goto(add);
+      await page.click('a:has-text("Cancel")');
+      await expect(page).toHaveURL(list);
+    }
+  });
+});
