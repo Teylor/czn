@@ -19,7 +19,7 @@ export default function CombatantSelector(
     
     useEffect(() => {
         const Combatants: Combatant[] = JSON.parse(localStorage.getItem("combatants") || "[]");
-        const mappedCombatants = Combatants.map((c: Combatant) => new Combatant(c.name, 0, 0));
+        const mappedCombatants = Combatants.map((c: Combatant) => c);
         setCombatants(mappedCombatants);
     }, []);
 
@@ -42,12 +42,12 @@ export default function CombatantSelector(
         {
         isOpen && (
             <div className="absolute w-50 top-full left-0 right-0 mt-1 border border-zinc-300 rounded-md bg-white z-10 max-h-64 overflow-y-auto">
-                {combatants.map((itCombatant) => (
+                {combatants.map((itCombatant: Combatant) => (
                     <button
                         key={`${keyUnique}-${itCombatant.id}`}
                         onClick={() => {
-                            setCombatant((new Combatant(itCombatant.name, 0, 0)) ?? undefined);
-                            setSelectedCombatant((new Combatant(itCombatant.name, 0, 0)) ?? undefined);
+                            setCombatant(itCombatant ?? undefined);
+                            setSelectedCombatant(itCombatant ?? undefined);
                             setIsOpen(false);
                         }}
                         className="w-50 px-3 py-2 text-left flex items-center gap-2 hover:bg-zinc-100 border-b border-zinc-200 last:border-b-0"

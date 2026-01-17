@@ -6,6 +6,7 @@ import Link from "next/link";
 import { CraftedMemoryFragment, SetType, MemoryFragmentsEquipped } from "@/sections/domain/memoryFragment/MemoryFragment";
 import CombatantSelector from "@/sections/teams/CombatantSelector";
 import PartnerSelector from "@/sections/teams/PartnerSelector";
+import SaveDataSelector from "@/sections/teams/SaveDataSelector";
 import MemoryFragmentsManual from "@/sections/teams/MemoryFragmentsManual";
 import MemoryFragmentsBis from "@/sections/teams/MemoryFragmentsBis";
 import SetsSelector from "@/sections/teams/SetsSelector";
@@ -60,8 +61,14 @@ export default function Teams(
                   disable={false}
                   setPartner={(partner) => setPartnerAt(i, partner)}
                 />
-                <div className="md:col-span-6">
-                  <h1>TODO Build {i+1}</h1>
+                <div className="md:col-span-6 p-2">
+                  <SaveDataSelector
+                    key={`Teams-SD${i+1}`}
+                    keyUnique={`Teams-SD${i+1}`}
+                    disable={false}
+                    combatant={members[i]?.combatant?.name || ""}
+                    setSaveData={() => {}}
+                  />
                 </div>
                 <div className="md:col-span-6 m-4">
                   <div className="flex items-center justify-center space-x-4">
