@@ -19,7 +19,7 @@ export default function PartnerSelector(
     
     useEffect(() => {
         const Partners: Partner[] = JSON.parse(localStorage.getItem("partners") || "[]");
-        const mappedPartners = Partners.map((p: Partner) => new Partner(p.name, 0, 0)) /* TODO */
+        const mappedPartners = Partners.map((p: Partner) => p)
         setPartners(mappedPartners);
     }, []);
 
@@ -42,12 +42,12 @@ export default function PartnerSelector(
         {
         isOpen && (
             <div className="absolute w-50 top-full left-0 right-0 mt-1 border border-zinc-300 rounded-md bg-white z-10 max-h-64 overflow-y-auto">
-                {partners.map((itPartner) => (
+                {partners.map((itPartner: Partner) => (
                     <button
                         key={`${keyUnique}-${itPartner.id}`}
                         onClick={() => {
-                            setPartner((new Partner(itPartner.name, 0, 0)) ?? undefined);
-                            setSelectedPartner((new Partner(itPartner.name, 0, 0)) ?? undefined)
+                            setPartner(itPartner ?? undefined);
+                            setSelectedPartner(itPartner ?? undefined)
                             setIsOpen(false);
                         }}
                         className="w-50 px-3 py-2 text-left flex items-center gap-2 hover:bg-zinc-100 border-b border-zinc-200 last:border-b-0"

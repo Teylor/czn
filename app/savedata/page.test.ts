@@ -12,7 +12,7 @@ test.describe('SaveData List Page', () => {
     });
 
     test('should display Home link', async ({ page }) => {
-      await expect(page.locator('a:has-text("Home")')).toBeVisible();
+      await expect(page.locator('a.inline-block.hover\\:opacity-80.transition-opacity')).toBeVisible();
     });
 
     test('should show no items in grid when localStorage is empty', async ({ page }) => {
@@ -43,6 +43,18 @@ test.describe('SaveData List Page', () => {
       await page.goto('/savedata');
 
       const deleteButtons = page.locator('button[aria-label="Delete save data"]');
+      await expect(deleteButtons).toHaveCount(2);
+    });
+
+    test('should show toggle for each item', async ({ page, storage }) => {
+      const savedata = [
+        createSaveData({ id: 'sd1', name: 'Test1' }),
+        createSaveData({ id: 'sd2', name: 'Test2' }),
+      ];
+      await storage.seedData({ savedata });
+      await page.goto('/savedata');
+
+      const deleteButtons = page.locator('.absolute.top-1.left-1');
       await expect(deleteButtons).toHaveCount(2);
     });
   });
@@ -176,7 +188,7 @@ test.describe('SaveData List Page', () => {
     });
 
     test('should navigate to home when clicking Home link', async ({ page }) => {
-      await page.click('a:has-text("Home")');
+      await page.click('a.inline-block.hover\\:opacity-80.transition-opacity');
       await expect(page).toHaveURL('/');
     });
 

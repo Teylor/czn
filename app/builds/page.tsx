@@ -50,9 +50,6 @@ export default function Builds({}: {}): JSX.Element {
             }
           </div>
         </div>
-        <Link href="/" className="btn-primary m-1">
-          Home
-        </Link>
         </>
     );
 }

@@ -46,12 +46,14 @@ export default function AddCombatant({
         <>
             <div className="my-8 container">
                 <CombatantSelector disable={true} selected={combatant} />
-                <h1 className="m-1">Level</h1>
-                <input type="number" className="m-1 w-32 px-3 py-2 border border-zinc-300 rounded-md bg-white text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-black appearance-none" 
+                <h1 className="m-3 text-lg font-bold">Level</h1>
+                <input type="number" 
+                className="mx-3 w-20 p-3 input-primary"
                     min={1} max={60} value={level} 
                     onChange={(e) => setLevel(parseInt(e.target.value))} />
-                <h1 className="m-1">Ego</h1>
-                <input type="number" className="m-1 w-32 px-3 py-2 border border-zinc-300 rounded-md bg-white text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-black appearance-none" 
+                <h1 className="m-3 text-lg font-bold">Ego</h1>
+                <input type="number" 
+                className="mx-3 w-20 p-3 input-primary"
                     min={0} max={6} value={ego} 
                     onChange={(e) => setEgo(parseInt(e.target.value))} />
                 <button 

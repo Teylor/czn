@@ -7,10 +7,8 @@ export default function useCombatant() {
   const [ego, setEgo] = useState<number>(0);
 
     useEffect(() => {
-        if (combatant) {
-            setLevel(level < 1 ? 1 : level > 60 ? 60 : level);
-            setEgo(ego < 0 ? 0 : ego > 6 ? 6 : ego);
-        }
+      setLevel(level < 1 ? 1 : level > 60 ? 60 : level);
+      setEgo(ego < 0 ? 0 : ego > 6 ? 6 : ego);
     }, [level, ego]);
 
   return { combatant, setCombatant, level, setLevel, ego, setEgo };

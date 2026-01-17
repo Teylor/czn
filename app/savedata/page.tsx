@@ -37,10 +37,10 @@ export default function SaveData({}: {}): JSX.Element {
             <IoMdAdd className="mr-2" />
             Add Save Data
           </Link>
-          <div className="grid grid-cols-1 gap-1 sm:grid-cols-3 md:grid-cols-5">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-1 mx-1">
             {
               saveData.map((sd) => (
-                <div key={sd?.id} className="relative border border-zinc-300 rounded-md p-4 flex flex-col items-center bg-gradient-to-br from-[#FD5613] to-[#62636E]">
+                <div key={sd?.id} className="relative border border-zinc-300 rounded-md p-4 flex flex-col items-center bg-linear-[-33deg,#FD5613_66%,white]">
                   <button
                       aria-label="Delete save data"
                       onClick={() => handleDelete(sd.id as unknown as string)}
@@ -79,9 +79,6 @@ export default function SaveData({}: {}): JSX.Element {
             }
           </div>
         </div>
-        <Link href="/" className="btn-primary m-1">
-          Home
-        </Link>
         </>
     );
 }

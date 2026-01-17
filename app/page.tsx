@@ -6,7 +6,14 @@ export default function Home() {
   return (
     <>
       <header className="my-8 container text-center">
-        <h1>Chaos Zero Nightmare Roster Manager</h1>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
+          <span className="text-white">CHAOS </span>
+          <span className="text-[#FD5613]">ZERO </span>
+          <span className="text-white">NIGHTMARE</span>
+          <span className="block text-2xl md:text-3xl mt-2 text-black font-medium">
+            Roster Manager
+          </span>
+        </h1>
       </header>
       <section className="my-8 container">
         <div className="my-8 grid grid-cols-1 gap-1 md:grid-cols-3">

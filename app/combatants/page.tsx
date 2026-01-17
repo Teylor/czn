@@ -28,11 +28,11 @@ export default function Combatants(): JSX.Element {
             <IoMdAdd className="mr-2" />
             Add Combatant
           </Link>
-          <div className="grid grid-cols-1 gap-1 sm:grid-cols-3 md:grid-cols-5">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-1 mx-1">
             {
               combatants.map((combatant) => (
-                <div key={combatant?.id} 
-                className="relative w-full bg-gradient-to-br from-[#FD5613] to-[#62636E] border border-zinc-300 rounded-md p-4 flex flex-col items-center">
+                <div key={combatant?.id}
+                className="relative w-75 h-50 border border-zinc-300 rounded-md p-4 flex flex-col items-center bg-linear-[-33deg,#FD5613_66%,white]">
                   <button
                       aria-label="Delete combatant"
                       onClick={() => handleDelete(combatant.id as unknown as string)}
@@ -55,10 +55,6 @@ export default function Combatants(): JSX.Element {
             }
           </div>
         </section>
-
-        <Link href="/" className="m-1 btn-primary">
-          Home
-        </Link>
       </>
     );
 }
