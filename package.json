@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "npx playwright test"
+    "test": "npx playwright test",
+    "posttest": "node -e \"const fs=require('fs');const rd=p=>{try{fs.rmSync(p,{recursive:true})}catch{}};rd('test-results');rd('playwright-report')\""
   },
   "dependencies": {
     "next": "16.1.1",

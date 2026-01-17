@@ -19,7 +19,7 @@ test.describe('LocalStorage Persistence', () => {
       await storage.setItem('combatants', [combatant]);
 
       await page.goto('/combatants');
-      await page.click('a:has-text("Home")');
+      await page.click('a.inline-block.hover\\:opacity-80.transition-opacity');
       await page.click('a[href="/combatants"]');
 
       await expect(page.locator('text=NavTest')).toBeVisible();

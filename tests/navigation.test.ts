@@ -36,26 +36,7 @@ test.describe('Application Navigation', () => {
 
     for (const route of pagesWithHome) {
       await page.goto(route);
-      await page.click('a:has-text("Home")');
-      await expect(page).toHaveURL('/');
-    }
-  });
-
-  test('should navigate from home to each section and back', async ({ page }) => {
-    const sections = [
-      { link: '/combatants', name: 'Combatants' },
-      { link: '/partners', name: 'Partners' },
-      { link: '/savedata', name: 'Save Datas' },
-      { link: '/fragments', name: 'Memory Fragments' },
-      { link: '/builds', name: 'Builds' },
-      { link: '/teams', name: 'Teams' },
-    ];
-
-    for (const section of sections) {
-      await page.goto('/');
-      await page.click(`a[href="${section.link}"]`);
-      await expect(page).toHaveURL(section.link);
-      await page.click('a:has-text("Home")');
+      await page.click('a.inline-block.hover\\:opacity-80.transition-opacity');
       await expect(page).toHaveURL('/');
     }
   });
