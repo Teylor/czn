@@ -26,7 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased w-screen h-screen bg-gradient-to-br from-[#62636E] to-white`}
       >
         {children}
       </body>

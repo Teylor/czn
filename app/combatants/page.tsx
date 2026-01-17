@@ -31,7 +31,8 @@ export default function Combatants(): JSX.Element {
           <div className="grid grid-cols-1 gap-1 sm:grid-cols-3 md:grid-cols-5">
             {
               combatants.map((combatant) => (
-                <div key={combatant?.id} className="relative border border-zinc-300 rounded-md p-4 flex flex-col items-center">
+                <div key={combatant?.id} 
+                className="relative w-full bg-gradient-to-br from-[#FD5613] to-[#62636E] border border-zinc-300 rounded-md p-4 flex flex-col items-center">
                   <button
                       aria-label="Delete combatant"
                       onClick={() => handleDelete(combatant.id as unknown as string)}
@@ -43,10 +44,10 @@ export default function Combatants(): JSX.Element {
                   <Link
                     href={`/combatants/add/${combatant?.id}`}
                     key={combatant?.id} className="w-full h-full flex flex-col items-center">
-                      <h2 className="mb-2">{combatant?.name}</h2>
-                      <Image src={combatant?.img} alt={combatant?.name} width={64} height={64} />
-                      <p>Level: {combatant?.level}</p>
-                      <p>Ego: {combatant?.ego}</p>
+                      <h2 className="mb-2 font-bold">{combatant?.name}</h2>
+                      <Image src={combatant?.img} alt={combatant?.name} width={100} height={100} />
+                      <p className="font-semibold">Level: {combatant?.level}</p>
+                      <p className="font-semibold">Ego: {combatant?.ego}</p>
                   </Link>
 
                 </div>

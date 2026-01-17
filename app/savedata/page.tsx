@@ -40,7 +40,7 @@ export default function SaveData({}: {}): JSX.Element {
           <div className="grid grid-cols-1 gap-1 sm:grid-cols-3 md:grid-cols-5">
             {
               saveData.map((sd) => (
-                <div key={sd?.id} className="relative border border-zinc-300 rounded-md p-4 flex flex-col items-center">
+                <div key={sd?.id} className="relative border border-zinc-300 rounded-md p-4 flex flex-col items-center bg-gradient-to-br from-[#FD5613] to-[#62636E]">
                   <button
                       aria-label="Delete save data"
                       onClick={() => handleDelete(sd.id as unknown as string)}
@@ -65,12 +65,12 @@ export default function SaveData({}: {}): JSX.Element {
                   <Link
                     href={`/savedata/add/${sd?.id}`}
                     key={sd?.id} className="w-full h-full flex flex-col items-center">
-                      <h2 className="mb-2">{sd?.name}</h2>
-                      <Image src={sd?.img} alt={sd?.name} width={64} height={64} />
+                      <h2 className="mb-2 text-lg font-bold">{sd?.name}</h2>
+                      <Image src={sd?.img} alt={sd?.name} width={100} height={100} />
                       <div className="grid grid-cols-3 gap-1">
-                        { sd?.equipment?.weapon?.img ? <Image src={sd?.equipment?.weapon?.img} alt={sd?.name} width={32} height={32} /> : "X" } {/* TODO replace X for empty image */}
-                        { sd?.equipment?.armor?.img ? <Image src={sd?.equipment?.armor?.img} alt={sd?.name} width={32} height={32} /> : "X" }
-                        { sd?.equipment?.ring?.img ? <Image src={sd?.equipment?.ring?.img} alt={sd?.name} width={32} height={32} /> : "X" }
+                        { sd?.equipment?.weapon?.img ? <Image src={sd?.equipment?.weapon?.img} alt={sd?.name} width={40} height={40} /> : "X" } {/* TODO replace X for empty image */}
+                        { sd?.equipment?.armor?.img ? <Image src={sd?.equipment?.armor?.img} alt={sd?.name} width={40} height={40} /> : "X" }
+                        { sd?.equipment?.ring?.img ? <Image src={sd?.equipment?.ring?.img} alt={sd?.name} width={40} height={40} /> : "X" }
                       </div>
                   </Link>
 

@@ -31,7 +31,7 @@ export default function Partners(): JSX.Element {
           <div className="grid grid-cols-1 gap-1 sm:grid-cols-3 md:grid-cols-5">
             {
               partners.map((partner) => (
-                <div key={partner?.id} className="relative border border-zinc-300 rounded-md p-4 flex flex-col items-center">
+                <div key={partner?.id} className=" w-full bg-gradient-to-br from-[#FD5613] to-[#62636E] relative border border-zinc-300 rounded-md p-4 flex flex-col items-center">
                   <button
                       aria-label="Delete partner"
                       onClick={() => handleDelete(partner.id as unknown as string)}
@@ -43,10 +43,10 @@ export default function Partners(): JSX.Element {
                   <Link
                     href={`/partners/add/${partner?.id}`}
                     key={partner?.id} className="w-full h-full flex flex-col items-center">
-                      <h2 className="mb-2">{partner?.name}</h2>
-                      <Image src={partner?.img} alt={partner?.name} width={64} height={64} />
-                      <p>Level: {partner?.level}</p>
-                      <p>Ego: {partner?.ego}</p>
+                      <h2 className="mb-2 font-bold">{partner?.name}</h2>
+                      <Image src={partner?.img} alt={partner?.name} width={100} height={100} />
+                      <p className="font-semibold">Level: {partner?.level}</p>
+                      <p className="font-semibold">Ego: {partner?.ego}</p>
                   </Link>
 
                 </div>

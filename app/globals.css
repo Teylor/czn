@@ -5,6 +5,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* CZN logo color: #FD5613 */
+/* 
+Triade Palette:
+#5C6BED (Blue)
+#92ED5C (Light Green)
+#7E986E (Muted Green)
+#6E6562 (Grayish Brown)
+#62636E (Grayish Blue)
+*/
+
 @layer components {
   /* Custom classes that behave like components. 
      Tailwind will place these AFTER 'base' but BEFORE 'utilities'.

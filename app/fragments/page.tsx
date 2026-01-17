@@ -69,7 +69,7 @@ export default function MemoryFragments(
             <div className="grid grid-cols-1 gap-1 sm:grid-cols-3 md:grid-cols-5">
               {
                 filteredFragments.map((fragment: MemoryFragment) => (
-                  <div key={fragment?.id} className="relative border border-zinc-300 rounded-md p-4">
+                  <div key={fragment?.id} className="relative border border-zinc-300 rounded-md p-4  w-full bg-gradient-to-br from-[#FD5613] to-[#62636E]">
                     <button
                       aria-label="Delete fragment"
                       onClick={() => handleDelete(fragment.id as unknown as string)}
@@ -80,13 +80,13 @@ export default function MemoryFragments(
                     <Link
                     href={`/fragments/add/${fragment?.id}`}
                     key={`a-${fragment?.id}`} className="flex flex-col items-center">
-                      <h2 className="mb-2">{fragment?.setType}</h2>
+                      <h2 className="mb-2 font-bold text-lg">{fragment?.setType}</h2>
                       <Image src={`${fragment?.img}`} alt={fragment?.id} width={64} height={64} />
-                      <p>Level: {fragment?.level}</p>
+                      <p className="mb-2 font-semibold">Level: {fragment?.level}</p>
                       <b>{Object.entries(fragment?.mainStat)[0]}</b>
                       {
                         fragment?.subStats && Object.entries(fragment.subStats).map(([key, value]) => (
-                          <p key={`${fragment?.id}-${key}`}>{JSON.stringify(value)}</p>
+                          <p className="font-semibold" key={`${fragment?.id}-${key}`}>{JSON.stringify(value)}</p>
                         ))
                       }
                     </Link>
@@ -95,7 +95,6 @@ export default function MemoryFragments(
               }
             </div>
           </section>
-          {/* Modal */}
           {showModal && (
             <div className="fixed inset-0 z-50 flex items-center justify-center">
               <div className="absolute inset-0 bg-black opacity-40" onClick={() => setShowModal(false)} />
