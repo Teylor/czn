@@ -59,4 +59,50 @@ test.describe('Home Page', () => {
     await page.click('a[href="/teams"]');
     await expect(page).toHaveURL('/teams');
   });
+
+  test.describe('Responsive - xs (480px)', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.setViewportSize({ width: 480, height: 800 });
+    });
+
+    test('should display navigation links in a single column', async ({ page }) => {
+      const gridColumns = await page.locator('section div.grid').first().evaluate((el) => {
+        return window.getComputedStyle(el).gridTemplateColumns;
+      });
+      expect(gridColumns).toBe("472px");
+    });
+  });
+
+  test.describe('Responsive - md (768px)', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.setViewportSize({ width: 768, height: 1024 });
+    });
+
+    test('should display navigation links in two columns', async ({ page }) => {
+      const gridColumns = await page.locator('section div.grid').first().evaluate((el) => {
+        return window.getComputedStyle(el).gridTemplateColumns;
+      });
+      expect(gridColumns).toBe("342px 342px");
+    });
+  });
+
+  test.describe('Responsive - lg (1024px)', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.setViewportSize({ width: 1024, height: 768 });
+    });
+
+    test('should display navigation links in two columns', async ({ page }) => {
+      const gridColumns = await page.locator('section div.grid').first().evaluate((el) => {
+        return window.getComputedStyle(el).gridTemplateColumns;
+      });
+      expect(gridColumns).toBe("470px 470px");
+    });
+
+    test('should have translation animations', async ({ page }) => {
+      const link1 = await page.locator('section div.grid a').nth(0);
+      expect(link1).toHaveClass(/lg:translation-right-home/);
+      const link2 = await page.locator('section div.grid a').nth(1);
+      expect(link2).toHaveClass(/lg:translation-left-home/);
+    });
+  });
 });

@@ -17,10 +17,10 @@ export default function Home() {
       </header>
       <section className="my-8 container">
         <div className="m-1 sm:m-10 grid grid-cols-1 gap-1 md:grid-cols-2">
-          <Link key="combatants-link" href="/combatants" className="btn-home justify-self-center translation-right-home">
+          <Link key="combatants-link" href="/combatants" className="btn-home justify-self-center lg:translation-right-home">
             Combatants
           </Link>
-          <Link key="partners-link" href="/partners" className="btn-home justify-self-center translation-left-home">
+          <Link key="partners-link" href="/partners" className="btn-home justify-self-center lg:translation-left-home">
             Partners
           </Link>
         </div>
@@ -33,10 +33,10 @@ export default function Home() {
           </Link>
         </div>
         <div className="m-1 sm:m-10 grid grid-cols-1 gap-1 md:grid-cols-2">
-          <Link key="savedata-link" href="/savedata" className="btn-home justify-self-center translation-right-home">
+          <Link key="savedata-link" href="/savedata" className="btn-home justify-self-center lg:translation-right-home">
             Save Datas
           </Link>
-          <Link key="fragments-link" href="/fragments" className="btn-home justify-self-center translation-left-home">
+          <Link key="fragments-link" href="/fragments" className="btn-home justify-self-center lg:translation-left-home">
             Memory Fragments
           </Link>
         </div>

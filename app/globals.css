@@ -19,16 +19,14 @@ Light Gray: #9D9D9D
      Tailwind will place these AFTER 'base' but BEFORE 'utilities'.
   */
   .btn-primary {
-    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors bg-black rounded-md hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black;
+    @apply inline-flex items-center justify-center px-4 py-2 
+    text-sm font-medium text-white transition-colors bg-black rounded-md 
+    hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black;
   }
   .btn-home {
-    @apply inline-flex items-center justify-center px-4 py-2 w-100 h-20 text-lg font-medium text-white transition-colors bg-black rounded-md hover:bg-[#FD5613] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black;
-  }
-  .translation-right-home {
-    @apply hover:translate-x-20 transition-transform;
-  }
-  .translation-left-home {
-    @apply hover:-translate-x-20 transition-transform;
+    @apply inline-flex items-center justify-center px-4 py-2 w-100 h-20 md:w-64
+    text-lg font-medium text-white transition-colors bg-black rounded-md 
+    hover:bg-[#FD5613] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black;
   }
   .btn-disabled {
     @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-red-800 rounded-md cursor-not-allowed;
@@ -45,5 +43,24 @@ Light Gray: #9D9D9D
   */
   .content-auto {
     content-visibility: auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:translation-right-home {
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+  .lg\:translation-right-home:hover {
+    transform: translateX(5rem);
+  }
+  .lg\:translation-left-home {
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+  .lg\:translation-left-home:hover {
+    transform: translateX(-5rem);
   }
 }
