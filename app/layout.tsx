@@ -28,7 +28,7 @@ export default function RootLayout({
     <html lang="en">
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-[#6658539d]`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-[#737373]`}
       >
         <header className="fixed top-0 left-0 right-0 z-50 bg-black border-b border-gray-800 px-4 py-3">
           <Link href="/" className="inline-block hover:opacity-80 transition-opacity">

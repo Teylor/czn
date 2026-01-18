@@ -30,8 +30,10 @@ export default function AddCombatant(): JSX.Element {
                 <input type="number" min={0} max={6} value={ego}
                     className="mx-3 w-20 p-3 input-primary"
                     onChange={(e) => setEgo(parseInt(e.target.value))} />
-                <button 
-                    className={`m-1 ${!combatant ? 'btn-disabled' : 'btn-primary'}`}
+                
+            </div>
+            <button 
+                    className={`m-1 w-20 h-10 ${!combatant ? 'btn-disabled' : 'btn-primary'}`}
                     onClick={() => {
                         if (combatant) {
                             saveCombatant(combatant);
@@ -39,10 +41,9 @@ export default function AddCombatant(): JSX.Element {
                     }}>
                     Save
                 </button>
-            </div>
-          <Link href="/combatants" className="m-1 btn-primary">
-            Cancel
-          </Link>
+            <Link href="/combatants" className="m-1 w-20 h-10 btn-primary">
+                Cancel
+            </Link>
         </>
     );
 }

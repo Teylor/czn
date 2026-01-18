@@ -114,7 +114,7 @@ export default function CombatantSelector({ disable, selected, onSelect }: Props
                 border-zinc-600 rounded-md font-bold text-xl text-zinc-100 
                 text-left flex items-center justify-between focus:outline-none 
                 focus:ring-2 focus:ring-zinc-400 focus:border-zinc-400"
-                style={{ backgroundColor: "#6658539d" }}
+                style={{ backgroundColor: "#9d9d9d" }}
             >
                 <span className="flex items-center gap-2">
                     {selected && <Image src={`/combatants/${selected.name.toLocaleLowerCase()}.png`} alt={selected.name} width={64} height={64} />}
@@ -124,12 +124,12 @@ export default function CombatantSelector({ disable, selected, onSelect }: Props
             </button>
             {isOpen && (
                 <div className="absolute border border-zinc-600 rounded-md z-10 w-60" 
-                style={{ backgroundColor: "#665853" }}>
+                style={{ backgroundColor: "#9d9d9d" }}>
                     <input ref={inputRef} value={searchTerm} type="text" onKeyDown={handleInputKeyDown} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search..." 
                     className="w-full p-3 text-lg
-                    border-b border-zinc-600 text-zinc-100 
-                    placeholder-zinc-400 focus:outline-none" 
-                    style={{ backgroundColor: "#6658539d" }} />
+                    border-b border-zinc-600 text-white 
+                    placeholder-white focus:outline-none" 
+                    style={{ backgroundColor: "#9d9d9d" }} />
                     {combatants.map((c, index) => (
                         <button
                             ref={(el) => { itemRefs.current[index] = el; }}
@@ -140,13 +140,11 @@ export default function CombatantSelector({ disable, selected, onSelect }: Props
                                 onSelect &&onSelect(new Combatant(c.name, 0, 0));
                                 setIsOpen(false);
                             }}
-                            className={`px-3 py-2 text-lg 
-                                font-bold w-full
-                                flex items-center gap-2 
-                                text-zinc-100 border-b 
+                            className={`px-3 py-2 text-lg font-bold w-full
+                                flex items-center gap-2  text-zinc-100 border-b 
                                 border-zinc-600 last:border-b-0 
                                 ${highlightedIndex === index ? 'brightness-105' : ''}`}
-                            style={{ backgroundColor: "#6658539d" }}
+                            style={{ backgroundColor: "#9d9d9d" }}
                         >
                             <Image src={`/combatants/${c.name.toLocaleLowerCase()}.png`} alt={c.name} width={64} height={64} />
                             {c.name}
