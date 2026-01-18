@@ -66,10 +66,15 @@ export default function MemoryFragments(
                   Filters
               </button>
             </div>
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-1 mx-1">
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-1">
               {
                 filteredFragments.map((fragment: MemoryFragment) => (
-                  <div key={fragment?.id} className="relative border border-zinc-300 rounded-md p-4 bg-linear-[-33deg,#FD5613_66%,white]">
+                  <div key={fragment?.id} 
+                    className="relative border border-zinc-300 rounded-md p-4 
+                    bg-linear-[-33deg,#FD5613_66%,#9D9D9D] 
+                    transition-transform duration-300 ease-out 
+                    hover:[transform:perspective(500px)_rotateX(-5deg)_rotateY(5deg)] 
+                    hover:z-5 hover:bg-linear-[-33deg,#FD5613_66%,white]">
                     <button
                       aria-label="Delete fragment"
                       onClick={() => handleDelete(fragment.id as unknown as string)}

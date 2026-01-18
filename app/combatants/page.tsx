@@ -28,13 +28,12 @@ export default function Combatants(): JSX.Element {
             <IoMdAdd className="mr-2" />
             Add Combatant
           </Link>
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-1 mx-1">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-1 mx-1 justify-items-center">
             {
               combatants.map((combatant) => (
                 <div key={combatant?.id}
-                  className="relative w-75 h-50 
-                  border border-zinc-300 rounded-md p-4 
-                  flex flex-col items-center 
+                  className="relative w-75 h-50 p4
+                  border border-zinc-300 rounded-md flex flex-col 
                   bg-linear-[-33deg,#FD5613_66%,#9D9D9D] 
                   transition-transform duration-300 ease-out 
                   hover:[transform:perspective(500px)_rotateX(-5deg)_rotateY(5deg)] 

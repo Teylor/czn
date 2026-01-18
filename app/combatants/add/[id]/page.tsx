@@ -56,19 +56,19 @@ export default function AddCombatant({
                 className="mx-3 w-20 p-3 input-primary"
                     min={0} max={6} value={ego} 
                     onChange={(e) => setEgo(parseInt(e.target.value))} />
-                <button 
-                className="m-1 btn-primary"
+            </div>
+            <button 
+                className="m-1 w-20 h-10 btn-primary"
                 onClick={() => {
                     if (combatant) {
                         saveCombatant(combatant);
                     }
                 }}>
                     Save
-                </button>
-            </div>
-          <Link href="/combatants" className="m-1 btn-primary">
+            </button>
+            <Link href="/combatants" className="m-1 w-20 h-10 btn-primary">
             Cancel
-          </Link>
+            </Link>
         </>
     );
 }

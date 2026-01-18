@@ -37,10 +37,17 @@ export default function SaveData({}: {}): JSX.Element {
             <IoMdAdd className="mr-2" />
             Add Save Data
           </Link>
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-1 mx-1">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-1">
             {
               saveData.map((sd) => (
-                <div key={sd?.id} className="relative border border-zinc-300 rounded-md p-4 flex flex-col items-center bg-linear-[-33deg,#FD5613_66%,white]">
+                <div key={sd?.id} 
+                  className="relative border border-zinc-300 rounded-md m-6 p-9 
+                  flex flex-col items-center 
+                  bg-linear-[-33deg,#FD5613_66%,#9D9D9D] 
+                  transition-transform duration-300 ease-out 
+                  hover:[transform:perspective(500px)_rotateX(-5deg)_rotateY(5deg)] 
+                  hover:z-5 hover:bg-linear-[-33deg,#FD5613_66%,white]"
+                  >
                   <button
                       aria-label="Delete save data"
                       onClick={() => handleDelete(sd.id as unknown as string)}
@@ -51,14 +58,14 @@ export default function SaveData({}: {}): JSX.Element {
 
                   <button
                     onClick={() => handleToggleOwned(sd.id)}
-                    className="absolute top-1 left-1 inline-flex items-center h-6 rounded-full w-20 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    className="absolute top-1 inline-flex items-center h-6 rounded-full w-15 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     style={{ backgroundColor: sd.owned ? '#22c55e' : '#3b82f6' }}
                   >
                     <span
                       className="inline-block h-5 w-9 transform rounded-full bg-white transition-transform text-xs font-bold flex items-center justify-center"
-                      style={{ transform: sd.owned ? 'translateX(44px)' : 'translateX(1px)' }}
+                      style={{ transform: sd.owned ? 'translateX(24px)' : 'translateX(1px)' }}
                     >
-                      {sd.owned ? 'Owned' : 'LF'}
+                      {sd.owned ? 'Own' : 'LF'}
                     </span>
                   </button>
 
@@ -68,9 +75,15 @@ export default function SaveData({}: {}): JSX.Element {
                       <h2 className="mb-2 text-lg font-bold">{sd?.name}</h2>
                       <Image src={sd?.img} alt={sd?.name} width={100} height={100} />
                       <div className="grid grid-cols-3 gap-1">
-                        { sd?.equipment?.weapon?.img ? <Image src={sd?.equipment?.weapon?.img} alt={sd?.name} width={40} height={40} /> : "X" } {/* TODO replace X for empty image */}
-                        { sd?.equipment?.armor?.img ? <Image src={sd?.equipment?.armor?.img} alt={sd?.name} width={40} height={40} /> : "X" }
-                        { sd?.equipment?.ring?.img ? <Image src={sd?.equipment?.ring?.img} alt={sd?.name} width={40} height={40} /> : "X" }
+                        { sd?.equipment?.weapon?.img ? 
+                        <Image src={sd?.equipment?.weapon?.img} alt={sd?.name} width={40} height={40} /> 
+                        : <div className="w-[40px] h-[53px] flex items-center justify-center bg-[#9D9D9D] text-zinc-500 font-bold">X</div> }
+                        { sd?.equipment?.armor?.img ? 
+                        <Image src={sd?.equipment?.armor?.img} alt={sd?.name} width={40} height={40} /> 
+                        : <div className="w-[40px] h-[53px] flex items-center justify-center bg-[#9D9D9D] text-zinc-500 font-bold">X</div> }
+                        { sd?.equipment?.ring?.img ? 
+                        <Image src={sd?.equipment?.ring?.img} alt={sd?.name} width={40} height={40} /> 
+                        : <div className="w-[40px] h-[53px] flex items-center justify-center bg-[#9D9D9D] text-zinc-500 font-bold">X</div> }
                       </div>
                   </Link>
 

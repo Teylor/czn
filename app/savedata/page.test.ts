@@ -54,7 +54,7 @@ test.describe('SaveData List Page', () => {
       await storage.seedData({ savedata });
       await page.goto('/savedata');
 
-      const deleteButtons = page.locator('.absolute.top-1.left-1');
+      const deleteButtons = page.locator('.absolute.top-1.right-1');
       await expect(deleteButtons).toHaveCount(2);
     });
   });
@@ -88,7 +88,7 @@ test.describe('SaveData List Page', () => {
       await storage.seedData({ savedata });
       await page.goto('/savedata');
 
-      const toggle = page.locator('.absolute.top-1.left-1').first();
+      const toggle = page.locator('.absolute.top-1.w-15').first();
       await expect(toggle.locator('text=LF')).toBeVisible();
     });
 
@@ -97,8 +97,8 @@ test.describe('SaveData List Page', () => {
       await storage.seedData({ savedata });
       await page.goto('/savedata');
 
-      const toggle = page.locator('.absolute.top-1.left-1').first();
-      await expect(toggle.locator('text=Owned')).toBeVisible();
+      const toggle = page.locator('.absolute.top-1.w-15').first();
+      await expect(toggle.locator('text=Own')).toBeVisible();
     });
 
     test('should toggle from LF to Owned when clicked', async ({ page, storage }) => {
@@ -106,12 +106,12 @@ test.describe('SaveData List Page', () => {
       await storage.seedData({ savedata });
       await page.goto('/savedata');
 
-      const toggle = page.locator('.absolute.top-1.left-1').first();
+      const toggle = page.locator('.absolute.top-1.w-15').first();
       await expect(toggle.locator('text=LF')).toBeVisible();
 
       await toggle.click();
 
-      await expect(toggle.locator('text=Owned')).toBeVisible();
+      await expect(toggle.locator('text=Own')).toBeVisible();
       await expect(toggle.locator('text=LF')).not.toBeVisible();
     });
 
@@ -120,13 +120,13 @@ test.describe('SaveData List Page', () => {
       await storage.seedData({ savedata });
       await page.goto('/savedata');
 
-      const toggle = page.locator('.absolute.top-1.left-1').first();
-      await expect(toggle.locator('text=Owned')).toBeVisible();
+      const toggle = page.locator('.absolute.top-1.w-15').first();
+      await expect(toggle.locator('text=Own')).toBeVisible();
 
       await toggle.click();
 
       await expect(toggle.locator('text=LF')).toBeVisible();
-      await expect(toggle.locator('text=Owned')).not.toBeVisible();
+      await expect(toggle.locator('text=Own')).not.toBeVisible();
     });
 
     test('should update localStorage when toggled', async ({ page, storage }) => {
@@ -134,7 +134,7 @@ test.describe('SaveData List Page', () => {
       await storage.seedData({ savedata });
       await page.goto('/savedata');
 
-      const toggle = page.locator('.absolute.top-1.left-1').first();
+      const toggle = page.locator('.absolute.top-1.w-15').first();
       await toggle.click();
 
       const updatedSaveData = await storage.getItem<any[]>('savedata');
@@ -148,14 +148,14 @@ test.describe('SaveData List Page', () => {
       await storage.seedData({ savedata });
       await page.goto('/savedata');
 
-      const toggle = page.locator('.absolute.top-1.left-1').first();
+      const toggle = page.locator('.absolute.top-1.w-15').first();
       await toggle.click();
-      await expect(toggle.locator('text=Owned')).toBeVisible();
+      await expect(toggle.locator('text=Own')).toBeVisible();
 
       await page.goto('/savedata');
 
-      const toggleAfterReload = page.locator('.absolute.top-1.left-1').first();
-      await expect(toggleAfterReload.locator('text=Owned')).toBeVisible();
+      const toggleAfterReload = page.locator('.absolute.top-1.w-15').first();
+      await expect(toggleAfterReload.locator('text=Own')).toBeVisible();
     });
 
     test('should only toggle the clicked item when multiple items exist', async ({ page, storage }) => {
@@ -166,12 +166,12 @@ test.describe('SaveData List Page', () => {
       await storage.seedData({ savedata });
       await page.goto('/savedata');
 
-      const toggles = page.locator('.absolute.top-1.left-1');
+      const toggles = page.locator('.absolute.top-1.w-15');
       await expect(toggles).toHaveCount(2);
 
       await toggles.first().click();
 
-      await expect(toggles.first().locator('text=Owned')).toBeVisible();
+      await expect(toggles.first().locator('text=Own')).toBeVisible();
       await expect(toggles.nth(1).locator('text=LF')).toBeVisible();
 
       const updatedSaveData = await storage.getItem<any[]>('savedata');
@@ -188,7 +188,7 @@ test.describe('SaveData List Page', () => {
     });
 
     test('should navigate to home when clicking Home link', async ({ page }) => {
-      await page.click('a.inline-block.hover\\:opacity-80.transition-opacity');
+      await page.click('a.inline-block.hover\\:opacity-80.transition-opacity'); //TODO copy to all tests
       await expect(page).toHaveURL('/');
     });
 
