@@ -7,7 +7,7 @@ export enum CombatantType {
     VANGUARD = "vanguard",
 }
 
-enum CombatantAttribute {
+export enum CombatantAttribute {
     PASSION = "passion",
     VOID = "void",
     INSTINCT = "instinct",
@@ -15,7 +15,7 @@ enum CombatantAttribute {
     JUSTICE = "justice",
 }
 
-enum CombatantRarity {
+export enum CombatantRarity {
     FOUR_STAR = 4,
     FIVE_STAR = 5,
 }

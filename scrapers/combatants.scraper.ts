@@ -1,20 +1,19 @@
-import * as fs from 'fs'; 
+import * as fs from 'fs';
 import * as path from 'path';
 import { getPage, closeBrowser } from './utils/browser';
 import { downloadImage } from './utils/download';
 import { slugify } from './utils/slugify';
 
-const SOURCE_URL = 'https://game8.co/games/Chaos-Zero-Nightmare/archives/558133';
-const OUTPUT_TS = path.join(__dirname, '..', 'lib', 'Partners.ts');
-const IMAGES_DIR = path.join(__dirname, '..', 'public', 'partners');
+const SOURCE_URL = 'https://game8.co/games/Chaos-Zero-Nightmare/archives/558105';
+const OUTPUT_TS = path.join(__dirname, '..', 'lib', 'Combatants.ts');
+const IMAGES_DIR = path.join(__dirname, '..', 'public', 'combatants');
 
-interface PartnerData {
+interface CombatantData {
   id: string;
   name: string;
   type: string;
+  attribute: string;
   rarity: number;
-  passive: string;
-  skill: string;
 }
 
 const TYPE_MAP: Record<string, string> = {
@@ -26,17 +25,24 @@ const TYPE_MAP: Record<string, string> = {
   'vanguard': 'VANGUARD',
 };
 
+const ATTRIBUTE_MAP: Record<string, string> = {
+  'passion': 'PASSION',
+  'void': 'VOID',
+  'instinct': 'INSTINCT',
+  'order': 'ORDER',
+  'justice': 'JUSTICE',
+};
+
 const RARITY_MAP: Record<number, string> = {
-  3: 'THREE_STAR',
   4: 'FOUR_STAR',
   5: 'FIVE_STAR',
 };
 
-async function scrapePartners(): Promise<PartnerData[]> {
+async function scrapeCombatants(): Promise<CombatantData[]> {
   const page = await getPage();
-  const partners: PartnerData[] = [];
+  const combatants: CombatantData[] = [];
 
-  console.log('Navigating to partners page...');
+  console.log('Navigating to combatants page...');
   await page.goto(SOURCE_URL, { waitUntil: 'networkidle' });
 
   // Scroll the custom scrollbar container to load all elements
@@ -64,7 +70,7 @@ async function scrapePartners(): Promise<PartnerData[]> {
   };
 
   if (heightDiv) {
-    console.log('Scrolling to load all partners...');
+    console.log('Scrolling to load all combatants...');
     let previousHeight = 0;
     let currentHeight = await heightDiv.evaluate((el) => parseInt(el.style.height) || el.scrollHeight);
 
@@ -92,8 +98,8 @@ async function scrapePartners(): Promise<PartnerData[]> {
     console.log('Finished scrolling, all elements should be loaded');
   }
 
-  // Find all partner links
-  const partnerLinks = await page.$$eval(
+  // Find all combatant links
+  const combatantLinks = await page.$$eval(
     '[class^="style-module__gridView"] a[href*="/games/Chaos-Zero-Nightmare/archives/"]',
     (links) => {
       const seen = new Set<string>();
@@ -116,10 +122,10 @@ async function scrapePartners(): Promise<PartnerData[]> {
     }
   );
 
-  console.log('partnerLinks:', partnerLinks);
-  console.log(`Found ${partnerLinks.length} potential partner links`);
+  console.log('combatantLinks:', combatantLinks);
+  console.log(`Found ${combatantLinks.length} potential combatant links`);
 
-  for (const { href, name } of partnerLinks) {
+  for (const { href, name } of combatantLinks) {
     if (!name || name.length < 2) continue;
 
     try {
@@ -129,46 +135,36 @@ async function scrapePartners(): Promise<PartnerData[]> {
       await page.goto(fullUrl, { waitUntil: 'networkidle', timeout: 30000 });
 
       // Extract rarity
-      const partnerRarity = await page.locator('h3:has-text("Stats and Effects") + table.a-table.a-table.a-table.a-table.table--fixed.a-table > tbody > tr:nth-child(4) > td:nth-child(1)').textContent();
-      console.log('rarity:', partnerRarity?.trim().toLowerCase());
-      let rarity = 3;
-      if (partnerRarity?.trim().toLowerCase().includes('5★')) {
+      const combatantRarity = await page.locator('h3:has-text("Basic Information") + table tr:has-text("Rarity") td').textContent();
+      console.log('rarity:', combatantRarity?.trim().toLowerCase());
+      let rarity = 4;
+      if (combatantRarity?.trim().toLowerCase().includes('★★★★★')) {
         rarity = 5;
-      } else if (partnerRarity?.trim().toLowerCase().includes('4★')) {
-        rarity = 4;
       }
 
       // Extract type
-      const partnerType = await page.locator('h3:has-text("Stats and Effects") + table.a-table.a-table.a-table.a-table.table--fixed.a-table > tbody > tr:nth-child(2) > td > a').textContent();
-      console.log('type:', partnerType?.trim().toLowerCase());
+      const combatantType = await page.locator('h3:has-text("Basic Information") + table tr:has-text("Type") td').textContent();
+      console.log('type:', combatantType?.trim().toLowerCase());
       let type = 'STRIKER';
       for (const [key, value] of Object.entries(TYPE_MAP)) {
-        if (partnerType?.trim().toLowerCase().includes(key)) {
+        if (combatantType?.trim().toLowerCase().includes(key)) {
           type = value;
           break;
         }
       }
 
-      // Try to extract passive and skill from page content
-      // Look for sections that mention "Partner Effect" or "Passive" and "Ego Skill"
-      let passive = '';
-      let skill = '';
-
-      // Try to find passive effect
-      const partnerSkill = await page.locator('h3:has-text("Stats and Effects") + table.a-table.a-table.a-table.a-table.table--fixed.a-table > tbody > tr:nth-child(8) > td').textContent();
-      console.log('skill:', partnerSkill?.trim().toLowerCase());
-      if (partnerSkill) {
-        passive = partnerSkill.trim().substring(0, 500);
+      // Extract attribute
+      const combatantAttribute = await page.locator('h3:has-text("Basic Information") + table tr:has-text("Attribute") td').textContent();
+      console.log('attribute:', combatantAttribute?.trim().toLowerCase());
+      let attribute = 'PASSION';
+      for (const [key, value] of Object.entries(ATTRIBUTE_MAP)) {
+        if (combatantAttribute?.trim().toLowerCase().includes(key)) {
+          attribute = value;
+          break;
+        }
       }
 
-      // Try to find ego skill
-      const partnerEgo = await page.locator('h3:has-text("Stats and Effects") + table.a-table.a-table.a-table.a-table.table--fixed.a-table > tbody > tr:nth-child(10) > td').textContent();
-      console.log('ego:', partnerEgo?.trim().toLowerCase());
-      if (partnerEgo) {
-        skill = partnerEgo.trim().substring(0, 200);
-      }
-
-      // Download partner image
+      // Download combatant image
       const imgSrc = await page.$eval(
         '.a-table img[src*="img.game8"]',
         (img) => img.getAttribute('src') || ''
@@ -184,13 +180,12 @@ async function scrapePartners(): Promise<PartnerData[]> {
         }
       }
 
-      partners.push({
+      combatants.push({
         id: slugify(name),
         name,
         type,
+        attribute,
         rarity,
-        passive: passive || 'TODO: Add passive effect',
-        skill: skill || 'TODO: Add skill',
       });
 
       await page.waitForTimeout(500);
@@ -200,36 +195,36 @@ async function scrapePartners(): Promise<PartnerData[]> {
   }
 
   await page.close();
-  return partners;
+  return combatants;
 }
 
-function generateTypeScript(partners: PartnerData[]): string {
-  const entries = partners.map((p) => `  {
-    id: "${p.id}",
-    name: "${p.name}",
-    type: ParterType.${p.type},
-    rarity: PartnerRarity.${RARITY_MAP[p.rarity]},
-    passive: \`${p.passive.replace(/`/g, "'")}\`,
-    skill: \`${p.skill.replace(/`/g, "'")}\`
+function generateTypeScript(combatants: CombatantData[]): string {
+  const entries = combatants.map((c) => `  {
+    id: "${c.id}",
+    name: "${c.name}",
+    type: CombatantType.${c.type},
+    attribute: CombatantAttribute.${c.attribute},
+    rarity: CombatantRarity.${RARITY_MAP[c.rarity]}
   }`).join(',\n');
 
-  return `import { ParterType, PartnerRarity } from "@/sections/domain/partner/Partner";
+  return `import { CombatantType } from "@/sections/domain/combatant/Combatant";
+import { CombatantAttribute, CombatantRarity } from "@/sections/domain/combatant/Combatant";
 
-export const PARTNERS = [
+export const COMBATANTS = [
 ${entries}
 ];
 `;
 }
 
 async function main() {
-  console.log('Starting Partners scraper...');
+  console.log('Starting Combatants scraper...');
 
   try {
-    const partners = await scrapePartners();
-    console.log(`\nScraped ${partners.length} partners`);
+    const combatants = await scrapeCombatants();
+    console.log(`\nScraped ${combatants.length} combatants`);
 
-    if (partners.length > 0) {
-      const tsContent = generateTypeScript(partners);
+    if (combatants.length > 0) {
+      const tsContent = generateTypeScript(combatants);
       fs.writeFileSync(OUTPUT_TS, tsContent);
       console.log(`\nGenerated: ${OUTPUT_TS}`);
     }
