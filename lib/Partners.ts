@@ -1,71 +1,308 @@
 import { ParterType, PartnerRarity } from "@/sections/domain/partner/Partner";
 
-export const PARTNERS = [ // TODO add all partners
-  { 
-    id: "yuri", 
-    name: "Yuri", 
-    type: ParterType.HUNTER, 
-    rarity: PartnerRarity.THREE_STAR, 
-    passive: `The assigned combatant's Attack is increased by 8%.
-Upon the first shuffle, the assigned combatant's damage dealt is increased by 8%.`,
-    skill: `Draw 2` 
+export const PARTNERS = [
+  {
+    id: "gaya",
+    name: "Gaya",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
   },
-  { 
-    id: "yvonne", 
-    name: "Yvonne", 
-    type: ParterType.CONTROLLER, 
-    rarity: PartnerRarity.THREE_STAR, 
-    passive: `The assigned combatant's Defense is increased by 8%.
-If the combatant ends the turn without using an attack card, Heal 30% at the start of the next turn.`,
-    skill: `Heal 100%
-1 Fortitude for 1 turn` 
+  {
+    id: "peko",
+    name: "Peko",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
   },
-  { 
-    id: "douglas", 
-    name: "Douglas", 
-    type: ParterType.STRIKER, 
-    rarity: PartnerRarity.THREE_STAR, 
-    passive: `The assigned combatant's attack is increased by 8%.
-At the start of the battle, Damage dealt by the assigned combatant increases by 8% for 1 turn.`,
-    skill: `120% Damage to all enemies` 
+  {
+    id: "itsuku",
+    name: "Itsuku",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
   },
-  { 
-    id: "zatera", 
-    name: "Zatera", 
-    type: ParterType.PSIONIC, 
-    rarity: PartnerRarity.THREE_STAR, 
-    passive: `The assigned combatant's Attack is increased by 8%.
-When injured , at the end of battle, recover 4% Health.`,
-    skill: `200% Shield` 
+  {
+    id: "westmacott",
+    name: "Westmacott",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
   },
-  { 
-    id: "nakia", 
-    name: "Nakia", 
-    type: ParterType.RANGER, 
-    rarity: PartnerRarity.THREE_STAR, 
-    passive: `The reassigned combatant's attack is increased by 8%.
-When an ally defeats an enemy, gain Backline Support.
-Backline Support: +10% Damage of attack card.
-Upon activation, Backline Support is reduced by 1 (up to 3 stacks).`,
-    skill: `200% Damage` 
+  {
+    id: "solia",
+    name: "Solia",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
   },
-  { 
-    id: "raidel", 
-    name: "Raidel", 
-    type: ParterType.VANGUARD, 
-    rarity: PartnerRarity.THREE_STAR, 
-    passive: `The combatant's max Health increases by 8%.
-If the combatant is in Counterattack state, their Defense-Based Damage increases by 8%.`,
-    skill: `100% Shield
-1 Counterattack` 
+  {
+    id: "janet",
+    name: "Janet",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
   },
-  { 
-    id: "akad", 
-    name: "Akad", 
-    type: ParterType.HUNTER, 
-    rarity: PartnerRarity.FOUR_STAR, 
-    passive: `The damage of the combatant's Bullet cards increases by 10%.
-When the combatant lands their first critical hit, Bullet card damage increases by 12% for 1 turn.`,
-    skill: `For 1 turn, +25% Critical Chance of Designated Combatant's Attack cards` 
+  {
+    id: "eishlen",
+    name: "Eishlen",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
   },
+  {
+    id: "nyx",
+    name: "Nyx",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "anteia",
+    name: "Anteia",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "zeta",
+    name: "Zeta",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "serithea",
+    name: "Serithea",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "priscilla",
+    name: "Priscilla",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "bria",
+    name: "Bria",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "kiara",
+    name: "Kiara",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "scarlet",
+    name: "Scarlet",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "marianne",
+    name: "Marianne",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "tina",
+    name: "Tina",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "marin",
+    name: "Marin",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "noel",
+    name: "Noel",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "erica",
+    name: "Erica",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "arwen",
+    name: "Arwen",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "alyssa",
+    name: "Alyssa",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "akad",
+    name: "Akad",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "daisy",
+    name: "Daisy",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "wilhelmina",
+    name: "Wilhelmina",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "rosaria",
+    name: "Rosaria",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "eloise",
+    name: "Eloise",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "rachel",
+    name: "Rachel",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "lillian",
+    name: "Lillian",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "ritochka",
+    name: "Ritochka",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "carroty",
+    name: "Carroty",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "nakia",
+    name: "Nakia",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "zatera",
+    name: "Zatera",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "raidel",
+    name: "Raidel",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "douglas",
+    name: "Douglas",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "yuri",
+    name: "Yuri",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "yvonne",
+    name: "Yvonne",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  },
+  {
+    id: "asteria",
+    name: "Asteria",
+    type: ParterType.STRIKER,
+    rarity: PartnerRarity.FIVE_STAR,
+    passive: `TODO: Add passive effect`,
+    skill: `TODO: Add skill`
+  }
 ];
