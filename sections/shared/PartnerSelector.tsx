@@ -2,25 +2,25 @@
 
 import Image from "next/image";
 import { JSX, useState, useEffect, useRef, useCallback } from "react";
-import { COMBATANTS } from "@/lib/Combatants";
-import { Combatant } from "@/sections/domain/combatant/Combatant";
+import { PARTNERS } from "@/lib/Partners";
+import { Partner } from "@/sections/domain/partner/Partner";
 
 type Props = {
     disable?: boolean;
-    selected?: Combatant | null;
-    onSelect?: (c: Combatant) => void;
+    selected?: Partner | null;
+    onSelect?: (p: Partner) => void;
 };
 
-export default function CombatantSelector({ disable, selected, onSelect }: Props): JSX.Element {
+export default function PartnerSelector({ disable, selected, onSelect }: Props): JSX.Element {
     const [isOpen, setIsOpen] = useState(false);
-    const [combatants, setCombatants] = useState<typeof COMBATANTS>(COMBATANTS);
+    const [partners, setPartners] = useState<typeof PARTNERS>(PARTNERS);
     const [searchTerm, setSearchTerm] = useState("");
     const [highlightedIndex, setHighlightedIndex] = useState<number>(-1)
     const containerRef = useRef<HTMLDivElement | null>(null);
     const inputRef = useRef<HTMLInputElement | null>(null);
     const itemRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
-    const sortedCombatants = combatants.sort((a, b) => a.name.localeCompare(b.name));
+    const sortedPartners = partners.sort((a, b) => a.name.localeCompare(b.name));
 
     useEffect(() => {
         const normalize = (s: string) =>
@@ -36,13 +36,13 @@ export default function CombatantSelector({ disable, selected, onSelect }: Props
             .replace(/\p{Diacritic}/gu, "");
 
         if (!query) {
-            setCombatants(sortedCombatants);
+            setPartners(sortedPartners);
             return;
         }
 
         const terms = query.split(/\s+/).filter(Boolean);
 
-        setCombatants(sortedCombatants.filter((p) => {
+        setPartners(sortedPartners.filter((p) => {
             const target = normalize(p.name);
             return terms.every((t) => target.includes(t));
         }));
@@ -79,7 +79,7 @@ export default function CombatantSelector({ disable, selected, onSelect }: Props
     function handleInputKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.key === 'ArrowDown') {
             e.preventDefault()
-            if (combatants.length > 0) {
+            if (partners.length > 0) {
                 setHighlightedIndex(0)
                 setTimeout(() => itemRefs.current[0]?.focus(), 0)
             }
@@ -89,12 +89,12 @@ export default function CombatantSelector({ disable, selected, onSelect }: Props
     function handleItemKeyDown(e: React.KeyboardEvent<HTMLButtonElement>, index: number) {
         if (e.key === 'ArrowDown') {
             e.preventDefault()
-            const next = (index + 1) % combatants.length
+            const next = (index + 1) % partners.length
             setHighlightedIndex(next)
             itemRefs.current[next]?.focus()
         } else if (e.key === 'ArrowUp') {
             e.preventDefault()
-            const prev = (index - 1 + combatants.length) % combatants.length
+            const prev = (index - 1 + partners.length) % partners.length
             setHighlightedIndex(prev)
             itemRefs.current[prev]?.focus()
         } else if (e.key === 'Enter') {
@@ -112,44 +112,44 @@ export default function CombatantSelector({ disable, selected, onSelect }: Props
             <button
             disabled={disable}
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-60 h-20 px-3 py-2 border 
-                border-zinc-600 rounded-md font-bold text-xl text-black 
-                text-left flex items-center justify-between focus:outline-none 
+                className="w-60 h-20 px-3 py-2 border
+                border-zinc-600 rounded-md font-bold text-xl text-black
+                text-left flex items-center justify-between focus:outline-none
                 focus:ring-2 focus:ring-zinc-400 focus:border-zinc-400"
                 style={{ backgroundColor: "#9d9d9d" }}
             >
                 <span className="flex items-center gap-2">
-                    {selected && <Image src={`/combatants/${selected.name.toLocaleLowerCase()}.png`} alt={selected.name} width={64} height={64} />}
-                    {selected?.name || "Select Combatant"}
+                    {selected && <Image src={`/partners/${selected.name.toLocaleLowerCase()}.png`} alt={selected.name} width={64} height={64} />}
+                    {selected?.name || "Select Partner"}
                 </span>
                 <span>▼</span>
             </button>
             {isOpen && (
                 <div className="absolute border border-zinc-600 rounded-md z-10 w-60 h-auto max-h-60 overflow-y-auto"
                 style={{ backgroundColor: "#9d9d9d" }}>
-                    <input ref={inputRef} value={searchTerm} type="text" onKeyDown={handleInputKeyDown} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search..." 
+                    <input ref={inputRef} value={searchTerm} type="text" onKeyDown={handleInputKeyDown} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search..."
                     className="w-full p-3 text-lg
-                    border-b border-zinc-600 text-black 
-                    placeholder-black focus:outline-none" 
+                    border-b border-zinc-600 text-black
+                    placeholder-black focus:outline-none"
                     style={{ backgroundColor: "#9d9d9d" }} />
-                    {combatants.map((c, index) => (
+                    {partners.map((p, index) => (
                         <button
                             ref={(el) => { itemRefs.current[index] = el; }}
-                            key={c.id}
+                            key={p.id}
                             onMouseEnter={() => setHighlightedIndex(index)}
                             onKeyDown={(e) => handleItemKeyDown(e, index)}
                             onClick={() => {
-                                onSelect &&onSelect(new Combatant(c.name, 0, 0));
+                                onSelect && onSelect(new Partner(p.name, 0, 0));
                                 setIsOpen(false);
                             }}
                             className={`px-3 py-2 text-lg font-bold w-full
-                                flex items-center gap-2 text-black border-b 
-                                border-zinc-600 last:border-b-0 
+                                flex items-center gap-2 text-black border-b
+                                border-zinc-600 last:border-b-0
                                 ${highlightedIndex === index ? 'brightness-105' : ''}`}
                             style={{ backgroundColor: "#9d9d9d" }}
                         >
-                            <Image src={`/combatants/${c.name.toLocaleLowerCase()}.png`} alt={c.name} width={64} height={64} />
-                            {c.name}
+                            <Image src={`/partners/${p.name.toLocaleLowerCase()}.png`} alt={p.name} width={64} height={64} />
+                            {p.name}
                         </button>
                     ))}
                 </div>

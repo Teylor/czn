@@ -1,18 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { JSX, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { PARTNERS } from "@/lib/Partners";
 import { Partner } from "@/sections/domain/partner/Partner";
 import usePartner from "@/hooks/usePartner";
+import PartnerSelector from "@/sections/shared/PartnerSelector";
 
 export default function AddPartner({ params }: { params: Promise<{ id: string }> }): JSX.Element {
     const router = useRouter();
 
     const [id, setId] = useState<{ id: string } | undefined>();
-    const [isOpen, setIsOpen] = useState(false);
     const { partner, setPartner, level, setLevel, ego, setEgo } = usePartner();
 
     function savePartner(partner: Partner) {
@@ -42,57 +40,28 @@ export default function AddPartner({ params }: { params: Promise<{ id: string }>
   return (
         <>
             <div className="my-8 container">
-                <div className="relative">
-                    <button 
-                        disabled={true}
-                        onClick={() => setIsOpen(!isOpen)}
-                        className="w-50 px-3 py-2 border border-zinc-300 rounded-md bg-white text-sm text-zinc-900 text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
-                    >
-                        <span className="flex items-center gap-2">
-                            {partner && <Image src={`/partners/${partner.name.toLocaleLowerCase()}.png`} alt={partner.name} width={64} height={64} />}
-                            {partner?.name || "Select Partner"}
-                        </span>
-                        <span>▼</span>
-                    </button>
-                    {isOpen && (
-                        <div className="w-100 top-full left-0 right-0 mt-1 border border-zinc-300 rounded-md bg-white z-10 max-h-64 overflow-y-auto">
-                            {PARTNERS.map((partner) => (
-                                <button
-                                    key={partner.id}
-                                    onClick={() => {
-                                        setPartner(new Partner(partner.name, 0, 0));
-                                        setIsOpen(false);
-                                    }}
-                                    className="w-100 px-3 py-2 text-left flex items-center gap-2 hover:bg-zinc-100 border-b border-zinc-200 last:border-b-0"
-                                >
-                                    <Image src={`/partners/${partner.name.toLocaleLowerCase()}.png`} alt={partner.name} width={64} height={64} />
-                                    {partner.name}
-                                </button>
-                            ))}
-                        </div>
-                    )}
-                </div>
-                <h1 className="m-1">Level</h1>
-                <input type="number" className="m-1 w-32 px-3 py-2 border border-zinc-300 rounded-md bg-white text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-black appearance-none" 
-                    min={1} max={60} value={level} 
+                <PartnerSelector disable={true} selected={partner} onSelect={(p) => setPartner(p)} />
+                <h1 className="m-3 text-lg text-[#FD5613] font-bold" style={{ WebkitTextStroke: "0.5px black" }}>Level</h1>
+                <input type="number" min={1} max={60} value={level}
+                    className="mx-3 w-20 p-3 input-primary"
                     onChange={(e) => setLevel(parseInt(e.target.value))} />
-                <h1 className="m-1">Ego</h1>
-                <input type="number" className="m-1 w-32 px-3 py-2 border border-zinc-300 rounded-md bg-white text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-black appearance-none" 
-                    min={0} max={6} value={ego} 
+                <h1 className="m-3 text-lg text-[#FD5613] font-bold" style={{ WebkitTextStroke: "0.5px black" }}>Ego</h1>
+                <input type="number" min={0} max={6} value={ego}
+                    className="mx-3 w-20 p-3 input-primary"
                     onChange={(e) => setEgo(parseInt(e.target.value))} />
-                <button 
-                    className="m-1 btn-primary"
-                    onClick={() => {
-                        if (partner) {
-                            savePartner(partner);
-                        }
-                    }}>
-                    Save
-                </button>
             </div>
-          <Link href="/partners" className="m-1 btn-primary">
-            Cancel
-          </Link>
+            <button
+                className={`m-1 w-20 h-10 ${!partner ? 'btn-disabled' : 'btn-primary'}`}
+                onClick={() => {
+                    if (partner) {
+                        savePartner(partner);
+                    }
+                }}>
+                Save
+            </button>
+            <Link href="/partners" className="m-1 w-20 h-10 btn-primary">
+                Cancel
+            </Link>
         </>
     );
 }

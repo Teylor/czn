@@ -46,12 +46,12 @@ export default function AddCombatant({
         <>
             <div className="my-8 container">
                 <CombatantSelector disable={true} selected={combatant} />
-                <h1 className="m-3 text-lg font-bold">Level</h1>
+                <h1 className="m-3 text-lg text-[#FD5613] font-bold" style={{ WebkitTextStroke: "0.5px black" }}>Level</h1>
                 <input type="number" 
                 className="mx-3 w-20 p-3 input-primary"
                     min={1} max={60} value={level} 
                     onChange={(e) => setLevel(parseInt(e.target.value))} />
-                <h1 className="m-3 text-lg font-bold">Ego</h1>
+                <h1 className="m-3 text-lg text-[#FD5613] font-bold" style={{ WebkitTextStroke: "0.5px black" }}>Ego</h1>
                 <input type="number" 
                 className="mx-3 w-20 p-3 input-primary"
                     min={0} max={6} value={ego} 
