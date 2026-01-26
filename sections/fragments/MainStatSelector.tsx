@@ -26,20 +26,25 @@ export default function MainStatSelector(
     }
 ): JSX.Element {
     return (
-        <div className="grid col-start-3 gap-1">
+        <div className="relative grid md:col-start-3 md:col-span-2 gap-1">
         {
             isMainStatOpen ? (
-                <div className="w-100 top-full left-0 right-0 mt-1 border border-zinc-300 rounded-md bg-white z-10 max-h-64 overflow-y-auto">
-                    {selectedFragment?.getPossibleStats().map((iv_stat: Stat) => (
+                <div className="absolute w-auto z-10 max-h-64 overflow-y-auto
+                mt-1 border border-zinc-300 rounded-md 
+                bg-[#9d9d9d]">
+                    {selectedFragment?.getPossibleStats().map((main_stat: Stat) => (
                         <button
-                            key={`IV-${iv_stat}`}
+                            key={`ms-${main_stat}`}
                             onClick={() => {
-                                setSelectedMainStat(iv_stat);
+                                setSelectedMainStat(main_stat);
                                 setIsMainStatOpen(false);
                             }}
-                            className="w-100 px-3 py-2 text-left flex items-center gap-2 hover:bg-zinc-100 border-b border-zinc-200 last:border-b-0"
+                            className="w-full h-15 font-bold 
+                            flex items-center px-45
+                            bg-[#9d9d9d] hover:bg-[#737373] 
+                            border-b border-zinc-200 last:border-b-0"
                         >
-                            {iv_stat}
+                            {main_stat}
                         </button>
                     ))}
                 </div>
@@ -47,15 +52,16 @@ export default function MainStatSelector(
                 <button 
                 disabled={disable}
                 onClick={() => (selectedPieceType === Piece.IV || selectedPieceType === Piece.V || selectedPieceType === Piece.VI) 
-                && setIsMainStatOpen(true)} className="w-100 px-3 py-2 text-left flex items-center gap-2 hover:bg-zinc-100 border-b border-zinc-200 last:border-b-0">
+                && setIsMainStatOpen(true)} className={`md:w-full m-5 px-3 py-2 font-bold gap-2 border-b border-zinc-200 
+                ${(!disable && (selectedPieceType === Piece.IV || selectedPieceType === Piece.V || selectedPieceType === Piece.VI)) ? 'hover:bg-[#9d9d9d]' : 'cursor-not-allowed'}`}>
                     {selectedMainStat}
                 </button>
             )
         }
 
-        <input type="number" step="0.1"
-        className="w-32 px-3 py-2 border border-zinc-300 rounded-md bg-white text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-black appearance-none" 
-        min={0} value={mainStat} 
+        <input type="number"
+        className="mx-3 w-23 ml-47 p-3 input-primary"
+        min={0} max={37} value={mainStat} 
         onChange={(e) => setMainStat(parseFloat(e.target.value))} />
     </div>
     )

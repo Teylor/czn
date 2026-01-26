@@ -1,6 +1,15 @@
 import { Piece, SetType } from "@/sections/domain/memoryFragment/MemoryFragment";
 
-export const MF_SETS = [
+export interface MemoryFragmentSet {
+    id: string;
+    set: SetType;
+    name: string;
+    effect: string;
+    require: number;
+    img: string;
+}
+
+export const MF_SETS: MemoryFragmentSet[] = [
     {
         id: "atk_set",
         set: SetType.ATK,
@@ -114,6 +123,12 @@ export const MF_SETS = [
         img: "/mf/passpark/1.png"
     }
 ];
+
+export interface PieceType {
+    id: string;
+    piece: Piece;
+    roman: string;
+}
 
 export const PIECE_TYPES = [
     {
