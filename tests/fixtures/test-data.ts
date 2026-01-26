@@ -17,7 +17,7 @@ export interface TestPartner {
 export interface TestFragment {
   id: string;
   setType: string;
-  piece: string;
+  piece: number;
   level: number;
   img: string;
   mainStat: Record<string, number>;
@@ -81,8 +81,8 @@ export function createPartner(overrides: Partial<TestPartner> = {}): TestPartner
 export function createFragment(overrides: Partial<TestFragment> = {}): TestFragment {
   return {
     id: generateId('fragment'),
-    setType: 'TestSet',
-    piece: 'I',
+    setType: 'atk',
+    piece: 1,
     level: 1,
     img: '/fragments/test.png',
     mainStat: { ATK: 100 },

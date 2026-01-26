@@ -1,5 +1,10 @@
 import { Piece, SetType } from "@/sections/domain/memoryFragment/MemoryFragment";
 
+export function getSetName(setType: SetType | undefined): string {
+    const set = MF_SETS.find(s => s.set === setType);
+    return set ? set.name : "";
+}
+
 export interface MemoryFragmentSet {
     id: string;
     set: SetType;
@@ -123,6 +128,10 @@ export const MF_SETS: MemoryFragmentSet[] = [
         img: "/mf/passpark/1.png"
     }
 ];
+
+export function getRoman(pieceNumber: Piece | undefined): string {
+    return pieceNumber && PIECE_TYPES.find(pt => pt.piece === pieceNumber)?.roman || "";
+}
 
 export interface PieceType {
     id: string;

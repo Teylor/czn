@@ -61,7 +61,7 @@ export default function PieceSelector(
         }
         {
             selectedSet && isPieceTypeOpen && (
-                <div className="absolute top-full left-0 right-0 border border-zinc-600 rounded-md z-10 w-60 h-auto max-h-120 overflow-y-auto overflow-x-hidden"
+                <div className="absolute top-full left-1 right-1 border border-zinc-600 rounded-md z-10 w-60 h-auto max-h-120 overflow-y-auto overflow-x-hidden"
                 style={{ backgroundColor: "#9d9d9d" }}>
                     {PIECE_TYPES.map((pt: PieceType) => (
                         <button

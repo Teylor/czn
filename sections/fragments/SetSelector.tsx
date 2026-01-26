@@ -46,7 +46,7 @@ export default function SetSelector({
                 >
                     <span className="flex items-center gap-2">
                         {selectedSet && <Image src={`/mf/${selectedSet}/1.png`} alt={selectedSet} width={64} height={64} /> || "Select Set" }
-                        {selected?.name || getSetName(selectedSet) || "Select Set"}
+                        {selected?.name || getSetName(selectedSet)}
                     </span>
                     <span>▼</span>
                 </button>
