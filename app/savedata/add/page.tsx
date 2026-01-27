@@ -8,10 +8,10 @@ import CombatantSelector from "@/sections/shared/CombatantSelector";
 import { Combatant } from "@/sections/domain/combatant/Combatant";
 import { BASIC_SETS, BasicSetCard, Epiphany, 
   COMBATANTS_EPIPHANIES, DIVINE_EPIPHANIES, 
-  COMMON_EPIPHANIES, CardType,
-  COMMON_CARDS, MONSTER_CARDS } from "@/lib/Builds";
+  COMMON_EPIPHANIES, CardType } from "@/lib/Builds";
 import EquipmentSelector from "@/sections/shared/EquipmentSelector";
 import { Equipment, EquipmentType } from "@/sections/domain/equipment/Equipment";
+import CardsModal from "@/sections/savedata/CardsModal";
 
 export default function AddSaveData(
   {}: {}): JSX.Element {
@@ -33,7 +33,6 @@ export default function AddSaveData(
     const [selectedCommonCardId, setSelectedCommonCardId] = useState<string | null>(null);
     
     const [addCardIsOpen, setAddCardIsOpen] = useState<boolean>(false);
-    const [cardsToAdd, setCardsToAdd] = useState<any[]>([]);
 
     const [weaponEquipment, setWeaponEquipment] = useState<Equipment | undefined>(undefined);
     const [armorEquipment, setArmorEquipment] = useState<Equipment | undefined>(undefined);
@@ -126,19 +125,7 @@ export default function AddSaveData(
     }
     
     function handleSelectCardToAdd() {
-      setCardsToAdd(MONSTER_CARDS.concat(COMMON_CARDS) || []);
       setAddCardIsOpen(true);
-    }
-
-    function handleCardToAdd(cardId: string | null) {
-      const index: number = cardsToAdd.findIndex((c) => c.id == cardId);
-      if (index != -1) {
-        let cardToAdd = Object.assign({}, cardsToAdd[index]);
-        cardToAdd.id = `${cardToAdd.id}-${basicSet.length + 1}`;
-        basicSet.push(cardToAdd);
-        setBasicSet([...basicSet]);
-      }
-      setAddCardIsOpen(false);
     }
 
     function handleSelectDivine(cardId: string | null, divineId: string) {
@@ -268,32 +255,16 @@ export default function AddSaveData(
             </div>
           )}
           {addCardIsOpen && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center">
-              <div
-                className="absolute inset-0 bg-black/50"
-                onClick={() => { setAddCardIsOpen(false); }}
-              />
-                    <div className="relative z-10 bg-white p-6 rounded-md max-w-2xl w-full mx-4 sm:mx-6">
-                      <h3 className="text-xl font-bold mb-3">Select Card to Add</h3>
-                      {/* Add a searcher */}
-                      <div className="space-y-3 max-h-96 overflow-auto">
-                        {cardsToAdd.map((card) => (
-                          <div key={`common-cards-${card.id}`}>
-                            <Image src={card.img} alt={card.name} width={32} height={32} className="inline-block mr-2" />
-                            <button
-                              className="w-full text-left p-3 border rounded hover:bg-gray-100"
-                              onClick={() => handleCardToAdd(card.id)}
-                            >
-                              {card.name} — {card.effect}
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                      <div className="mt-3 text-right">
-                        <button className="btn-primary" onClick={() => { setAddCardIsOpen(false); }}>Close</button>
-                      </div>
-                    </div>
-            </div>
+            <CardsModal
+              open={addCardIsOpen}
+              onClose={() => setAddCardIsOpen(false)}
+              onAddCard={(card: any) => {
+                const cardToAdd = { ...card };
+                cardToAdd.id = `${cardToAdd.id}-${basicSet.length + 1}`;
+                setBasicSet([...basicSet, cardToAdd]);
+                setAddCardIsOpen(false);
+              }}
+            />
           )}
           {
             combatant && basicSet.length > 0 && (

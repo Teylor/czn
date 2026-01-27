@@ -10,8 +10,6 @@ test.describe('Application Navigation', () => {
       '/partners/add',
       '/fragments',
       '/fragments/add',
-      '/builds',
-      '/builds/add',
       '/savedata',
       '/savedata/add',
       '/teams',
@@ -29,7 +27,6 @@ test.describe('Application Navigation', () => {
       '/combatants',
       '/partners',
       '/fragments',
-      '/builds',
       '/savedata',
       '/teams'
     ];
@@ -46,7 +43,6 @@ test.describe('Application Navigation', () => {
       { list: '/combatants', add: '/combatants/add', button: 'Add Combatant' },
       { list: '/partners', add: '/partners/add', button: 'Add Partner' },
       { list: '/fragments', add: '/fragments/add', button: 'Add Memory Fragments' },
-      { list: '/builds', add: '/builds/add', button: 'Add Build' },
       { list: '/savedata', add: '/savedata/add', button: 'Add Save Data' },
       { list: '/teams', add: '/teams/add', button: 'Add Team' },
     ];

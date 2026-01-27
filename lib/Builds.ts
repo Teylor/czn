@@ -96,6 +96,19 @@ export const MONSTER_CARDS: CommonSetCard[] = [
     },
 ]
 
+export const FORBIDDEN_CARDS: CommonSetCard[] = [
+    {
+        id: "forbidden_card1",
+        img: "/cards/forbidden/eternal_hunger.png",
+        name: "Eternal Hunger",
+        effect: "Attunement: Draw 1, +1 AP",
+        cost: 0,
+        type: CardType.SKILL,
+        combatantTypes: [],
+        enableCommon: false,
+    },
+]
+
 export const COMMON_EPIPHANIES = [
     {
         id: "common_epi_1",

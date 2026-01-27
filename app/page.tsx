@@ -25,9 +25,6 @@ export default function Home() {
           </Link>
         </div>
         <div className="m-1 sm:m-10 grid grid-cols-1 gap-1">
-          {/* <Link key="builds-link" href="/builds" className="btn-home justify-self-center translation-right-home">
-            Builds
-          </Link> */}
           <Link key="teams-link" href="/teams" className="btn-home justify-self-center">
             Teams
           </Link>
@@ -38,15 +35,6 @@ export default function Home() {
           </Link>
           <Link key="fragments-link" href="/fragments" className="btn-home justify-self-center lg:translation-left-home">
             Memory Fragments
-          </Link>
-        </div>
-        
-        <div className="m-1 sm:m-10 grid grid-cols-1 gap-1">
-          <Link key="save-data-calculator-link" href="/builds" className="btn-home justify-self-center cursor-not-allowed opacity-50">
-            Save Data Calculator (WIP)
-          </Link>
-          <Link key="fragments-scanner-link" href="/builds" className="btn-home justify-self-center cursor-not-allowed opacity-50">
-            Fragment Scanner (WIP)
           </Link>
         </div>
       </section>
